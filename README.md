@@ -45,75 +45,41 @@ O catálogo completo dos seus jogos.
 *   **Busca Instantânea:** Pesquisa em tempo real pelo título do jogo.
 *   **Game Cards:** Cards visuais com a arte da capa, status e plataformas.
 
-### 3. Cadastro de Jogos (`/add`)
-Fluxo otimizado para adicionar novos títulos.
-*   **Busca Inteligente:**
-    *   **Verificação Local:** O sistema avisa se o jogo já está na sua biblioteca para evitar duplicatas.
-    *   **API RAWG:** Integração com a API pública da RAWG para buscar capas, gêneros e metadados automaticamente.
-    *   **Fallback Manual:** Se a API falhar ou o jogo não for encontrado, permite cadastro manual.
-*   **Mapeamento de Plataformas:** O sistema sugere automaticamente as plataformas com base no retorno da API, cruzando com as plataformas que você possui ativas nas configurações.
+### 3. Cadastro e Edição (`/add`, `/finish`, `/drop`)
+Fluxos padronizados para gerenciar o ciclo de vida dos jogos.
+*   **Busca Inteligente:** Integração com API RAWG e fallback manual.
+*   **Botões de Ação Padronizados:** Interface consistente com botões de confirmação proeminentes, largos e centralizados para ações críticas.
+*   **Fluxo Flexível:** Permite registrar a conclusão direta de jogos que estavam pausados ou marcados como "Desistiu", sem necessidade de reativação prévia.
 
 ### 4. Estatísticas (`/stats`)
-Visualização de dados do seu hábito de jogo.
-*   **Modos de Visão:** Mensal, Anual e Global.
+Visualização de dados com lógica matemática rigorosa para evitar duplicidade.
+*   **Lógica de Distribuição Hierárquica:** Cada jogo conta apenas uma vez no período visualizado, obedecendo a seguinte prioridade de status:
+    1.  **Platina (100%):** Prioridade máxima.
+    2.  **Finalizado:** Conclusão padrão.
+    3.  **Desistência:** Apenas se não houver conclusão no mesmo período.
+    4.  **Iniciado:** Apenas se não houver nenhum dos eventos acima (Início, Pausa, Rejogo).
 *   **Gráficos:**
-    *   KPIs (Key Performance Indicators) para totais.
-    *   Gráfico de Pizza para distribuição de status.
-    *   Gráfico de Barras para Top Plataformas e Gêneros.
+    *   KPIs baseados em jogos únicos.
+    *   Ranking de Plataformas e Gêneros (contabilizando jogos únicos, não volume de eventos).
 
 ### 5. Gamificação (`/achievements`)
 Um sistema interno de conquistas para incentivar o uso do app.
 *   **Engine de Conquistas:** Monitora ações no `GameContext` e desbloqueia troféus automaticamente.
-*   **Tipos:**
-    *   *Booleanas:* Ações únicas (ex: "Cadastrou o primeiro jogo").
-    *   *Progressivas:* Metas cumulativas (ex: "Zerou 50 jogos").
-    *   *Secretas:* Conquistas ocultas até serem desbloqueadas.
+*   **Tipos:** Booleanas, Progressivas e Secretas.
 *   **Notificações:** Toasts animados aparecem no canto da tela ao desbloquear uma conquista.
 
 ### 6. Configurações (`/settings`)
 Personalização da experiência.
 *   **Perfil:** Nome e Avatar.
-*   **Plataformas Ativas:** Selecione quais consoles/sistemas você possui. Isso filtra as opções na hora de cadastrar jogos, limpando a interface.
-*   **API Key:** Campo para inserir sua chave pessoal da RAWG API (opcional, mas recomendado para capas melhores).
+*   **Plataformas Ativas:** Selecione quais consoles/sistemas você possui para filtrar as listas de cadastro.
+*   **API Key:** Campo para inserir sua chave pessoal da RAWG API.
 
 ---
 
 ## 🛠️ Como Funciona o Código
 
 ### Gerenciamento de Dados (`GameContext.tsx`)
-Não há backend. Todos os dados (`games`, `events`, `achievements`, `userProfile`, `settings`) são geridos por um Contexto React e persistidos automaticamente no `localStorage` do navegador.
-*   **Exportação:** O sistema permite exportar um arquivo JSON com todo o seu backup.
-*   **Achievement Engine:** Um `useEffect` dentro do contexto recalcula o progresso das conquistas toda vez que a lista de jogos ou eventos muda.
+Não há backend. Todos os dados (`games`, `events`, `achievements`, `userProfile`, `settings`) são geridos por um Contexto React e persistidos automaticamente no `localStorage`.
 
-### Integração RAWG (`services/api.ts`)
-A função `searchGames` tenta primeiro usar a chave de API fornecida nas configurações. Se a chave não existir ou a requisição falhar (limite de quota, erro de rede), o sistema faz um *fallback* gracioso para um banco de dados mockado, garantindo que a aplicação nunca quebre.
-
-### Design System (`Playground.tsx`)
-Existe uma rota `/playground` (acessível pelo menu flutuante) que serve como documentação viva dos componentes. Lá é possível ver todos os botões, inputs, cards e tipografias em seus variados estados.
-
----
-
-## 🎨 Estilo e UX
-
-*   **Identidade Visual:** Fundo escuro (`slate-900`) com acentos em Índigo, Roxo e Esmeralda.
-*   **Fonte:** *Inter* para textos gerais e *Orbitron* para o logotipo, evocando uma estética futurista/gamer.
-*   **Layout:** Container centralizado (`max-w-7xl`) para consistência em telas grandes, totalmente responsivo para mobile.
-*   **Navegação:** Menu flutuante (FAB) inspirado no "Path", expandindo opções de navegação e ações rápidas.
-
----
-
-## 📦 Instalação e Execução
-
-Este projeto utiliza uma estrutura simplificada sem bundler complexo exposto (estilo CodeSandbox/StackBlitz), usando import maps para dependências.
-
-1.  Clone o repositório.
-2.  Para rodar localmente com um servidor de desenvolvimento (como Vite):
-    *   Crie um arquivo `package.json` básico.
-    *   Instale `react`, `react-dom`, `react-router-dom`, `lucide-react`, `recharts`, `tailwindcss`.
-    *   Execute `npm run dev`.
-
-*Nota: No ambiente atual, o arquivo `index.html` já consome as dependências via CDN (ESM.sh) e Tailwind via script, não necessitando de `npm install` para visualização rápida.*
-
----
-
-**GameLine v1.0** - Feito para quem ama jogar.
+### Sistema de Ícones e Cores (`constants.ts` / `platforms.ts`)
+A aplicação possui um mapeamento centralizado de plataformas, definindo cores (Tailwind classes) e metadados para cada sistema (PlayStation, Xbox, Nintendo, PC, Mobile, Retro).

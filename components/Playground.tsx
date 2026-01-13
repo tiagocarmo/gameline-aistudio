@@ -178,6 +178,19 @@ const Playground: React.FC = () => {
              <div className="w-full">
                 <Button fullWidth variant="primary">Full Width Button</Button>
              </div>
+             {/* Primary Action Button Example */}
+             <div className="w-full mt-4 p-4 border border-slate-700/50 rounded-xl bg-slate-900/50">
+                <Text variant="small" className="mb-4 text-slate-500 uppercase font-bold text-center">Botão de Ação Principal (Formulários)</Text>
+                <div className="flex justify-center">
+                    <Button 
+                        variant="primary" 
+                        icon={Check}
+                        className="w-full md:w-[340px] h-auto py-6 text-lg font-bold shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                        Confirmar Ação
+                    </Button>
+                </div>
+             </div>
           </div>
         </ComponentDoc>
 

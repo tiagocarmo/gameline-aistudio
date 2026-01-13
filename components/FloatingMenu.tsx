@@ -9,10 +9,11 @@ import { cn } from '../lib/utils';
 const MenuLabel = ({ text }: { text: string }) => (
   <span
     className={cn(
-      "absolute left-16 whitespace-nowrap py-1",
-      "text-sm font-medium text-slate-200", // Standardized font, no background
-      "drop-shadow-md select-none", // Shadow for readability against any bg
-      "pointer-events-none" // Text shouldn't block clicks
+      "absolute left-16 whitespace-nowrap",
+      "text-sm font-bold text-slate-200 transition-all duration-200", 
+      "drop-shadow-md", // Basic shadow for legibility without background box
+      "cursor-pointer hover:text-white hover:scale-105", // Interactive states
+      "select-none z-30"
     )}
   >
     {text}
@@ -95,10 +96,11 @@ const FloatingMenu: React.FC = () => {
         {/* 
             2. Actions Sub-items 
             Rendered BEFORE the Actions Trigger in flex-col-reverse so they appear BELOW it visually.
+            w-80 (was w-64) ensures labels aren't clipped
         */}
         <div 
              className={cn(
-                 "flex flex-col-reverse items-center gap-3 transition-all duration-300 overflow-hidden",
+                 "flex flex-col-reverse items-center gap-3 transition-all duration-300 overflow-hidden w-80",
                  isActionsOpen ? "max-h-[200px] opacity-100 py-2" : "max-h-0 opacity-0 py-0"
              )}
         >
