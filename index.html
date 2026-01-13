@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GameLine</title>
+    
+    <!-- Fonts: Inter & Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          container: {
+            center: true,
+            padding: "2rem",
+            screens: {
+              "2xl": "1400px",
+            },
+          },
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+              display: ['Space Grotesk', 'system-ui', 'sans-serif'],
+            },
+            colors: {
+              border: "hsl(var(--border))",
+              input: "hsl(var(--input))",
+              ring: "hsl(var(--ring))",
+              background: "hsl(var(--background))",
+              foreground: "hsl(var(--foreground))",
+              primary: {
+                DEFAULT: "hsl(var(--primary))",
+                foreground: "hsl(var(--primary-foreground))",
+              },
+              secondary: {
+                DEFAULT: "hsl(var(--secondary))",
+                foreground: "hsl(var(--secondary-foreground))",
+              },
+              destructive: {
+                DEFAULT: "hsl(var(--destructive))",
+                foreground: "hsl(var(--destructive-foreground))",
+              },
+              muted: {
+                DEFAULT: "hsl(var(--muted))",
+                foreground: "hsl(var(--muted-foreground))",
+              },
+              accent: {
+                DEFAULT: "hsl(var(--accent))",
+                foreground: "hsl(var(--accent-foreground))",
+              },
+              popover: {
+                DEFAULT: "hsl(var(--popover))",
+                foreground: "hsl(var(--popover-foreground))",
+              },
+              card: {
+                DEFAULT: "hsl(var(--card))",
+                foreground: "hsl(var(--card-foreground))",
+              },
+              // GameLine Custom Colors mapped to CSS vars
+              gameline: {
+                blue: "hsl(var(--gameline-blue))",
+                "blue-dark": "hsl(var(--gameline-blue-dark))",
+                purple: "hsl(var(--gameline-purple))",
+                "purple-dark": "hsl(var(--gameline-purple-dark))",
+              },
+            },
+            borderRadius: {
+              lg: "var(--radius)",
+              md: "calc(var(--radius) - 2px)",
+              sm: "calc(var(--radius) - 4px)",
+            },
+            keyframes: {
+              "accordion-down": {
+                from: { height: "0" },
+                to: { height: "var(--radix-accordion-content-height)" },
+              },
+              "accordion-up": {
+                from: { height: "var(--radix-accordion-content-height)" },
+                to: { height: "0" },
+              },
+              "float": {
+                "0%, 100%": { transform: "translateY(0px)" },
+                "50%": { transform: "translateY(-10px)" },
+              },
+              "pulse-slow": {
+                "0%, 100%": { opacity: "1" },
+                "50%": { opacity: "0.7" },
+              },
+              "fade-in": {
+                from: { opacity: "0" },
+                to: { opacity: "1" },
+              },
+              "slide-up": {
+                from: { opacity: "0", transform: "translateY(20px)" },
+                to: { opacity: "1", transform: "translateY(0)" },
+              },
+            },
+            animation: {
+              "accordion-down": "accordion-down 0.2s ease-out",
+              "accordion-up": "accordion-up 0.2s ease-out",
+              "float": "float 6s ease-in-out infinite",
+              "pulse-slow": "pulse-slow 4s ease-in-out infinite",
+              "fade-in": "fade-in 0.6s ease-out forwards",
+              "slide-up": "slide-up 0.6s ease-out forwards",
+            },
+          }
+        }
+      }
+    </script>
+    <style>
+      @layer base {
+        :root {
+          /* Light Mode Variables */
+          --background: 0 0% 98%;
+          --foreground: 230 25% 10%;
+
+          --card: 0 0% 100%;
+          --card-foreground: 230 25% 10%;
+
+          --popover: 0 0% 100%;
+          --popover-foreground: 230 25% 10%;
+
+          --primary: 217 91% 60%;
+          --primary-foreground: 0 0% 100%;
+
+          --secondary: 263 70% 58%;
+          --secondary-foreground: 0 0% 100%;
+
+          --muted: 220 15% 95%;
+          --muted-foreground: 220 10% 50%;
+
+          --accent: 263 70% 58%;
+          --accent-foreground: 0 0% 100%;
+
+          --destructive: 0 84% 60%;
+          --destructive-foreground: 0 0% 100%;
+
+          --border: 220 15% 90%;
+          --input: 220 15% 90%;
+          --ring: 217 91% 60%;
+
+          --radius: 0.75rem;
+
+          --gameline-blue: 217 91% 60%;
+          --gameline-blue-dark: 221 83% 53%;
+          --gameline-purple: 263 70% 58%;
+          --gameline-purple-dark: 271 81% 56%;
+          
+          --sidebar-background: 0 0% 98%;
+          --sidebar-foreground: 230 25% 10%;
+          --sidebar-primary: 217 91% 60%;
+          --sidebar-primary-foreground: 0 0% 100%;
+          --sidebar-accent: 263 70% 58%;
+          --sidebar-accent-foreground: 0 0% 100%;
+          --sidebar-border: 220 15% 90%;
+          --sidebar-ring: 217 91% 60%;
+        }
+
+        .dark {
+          /* Dark Mode Variables */
+          --background: 230 25% 8%;
+          --foreground: 220 20% 95%;
+
+          --card: 230 25% 11%;
+          --card-foreground: 220 20% 95%;
+
+          --popover: 230 25% 11%;
+          --popover-foreground: 220 20% 95%;
+
+          --primary: 217 91% 60%;
+          --primary-foreground: 0 0% 100%;
+
+          --secondary: 263 70% 58%;
+          --secondary-foreground: 0 0% 100%;
+
+          --muted: 230 20% 15%;
+          --muted-foreground: 220 15% 60%;
+
+          --accent: 230 20% 15%; /* Muted for accent bg */
+          --accent-foreground: 0 0% 100%;
+
+          --destructive: 0 72% 50%;
+          --destructive-foreground: 0 0% 100%;
+
+          --border: 230 20% 18%;
+          --input: 230 20% 18%;
+          --ring: 217 91% 60%;
+
+          --gameline-blue: 217 91% 60%;
+          --gameline-blue-dark: 221 83% 53%;
+          --gameline-purple: 263 70% 58%;
+          --gameline-purple-dark: 271 81% 56%;
+
+          --sidebar-background: 230 25% 8%;
+          --sidebar-foreground: 220 20% 95%;
+          --sidebar-primary: 217 91% 60%;
+          --sidebar-primary-foreground: 0 0% 100%;
+          --sidebar-accent: 263 70% 58%;
+          --sidebar-accent-foreground: 0 0% 100%;
+          --sidebar-border: 230 20% 18%;
+          --sidebar-ring: 217 91% 60%;
+        }
+      }
+      
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: hsl(var(--background));
+        color: hsl(var(--foreground));
+      }
+      
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: hsl(var(--muted)); 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: hsl(var(--muted-foreground) / 0.5); 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: hsl(var(--muted-foreground)); 
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.3.1",
+    "react/": "https://esm.sh/react@18.3.1/",
+    "react-dom": "https://esm.sh/react-dom@18.3.1",
+    "react-dom/": "https://esm.sh/react-dom@18.3.1/",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.294.0?deps=react@18.3.1",
+    "recharts": "https://esm.sh/recharts@2.12.7?deps=react@18.3.1,react-dom@18.3.1",
+    "react-router-dom": "https://esm.sh/react-router-dom@6.23.1?deps=react@18.3.1,react-dom@18.3.1",
+    "class-variance-authority": "https://esm.sh/class-variance-authority@0.7.0",
+    "clsx": "https://esm.sh/clsx@2.1.1",
+    "tailwind-merge": "https://esm.sh/tailwind-merge@2.3.0",
+    "@radix-ui/react-label": "https://esm.sh/@radix-ui/react-label@2.0.2?deps=react@18.3.1,react-dom@18.3.1",
+    "@radix-ui/react-select": "https://esm.sh/@radix-ui/react-select@2.0.0?deps=react@18.3.1,react-dom@18.3.1",
+    "@radix-ui/react-slot": "https://esm.sh/@radix-ui/react-slot@1.0.2?deps=react@18.3.1,react-dom@18.3.1",
+    "@radix-ui/react-toast": "https://esm.sh/@radix-ui/react-toast@1.1.5?deps=react@18.3.1,react-dom@18.3.1"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

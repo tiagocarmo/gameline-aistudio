@@ -1,0 +1,2 @@
+
+export const DEFAULT_AVATAR = "https://api.dicebear.com/9.x/adventurer/svg?seed=Eden&backgroundType=gradientLinear&earrings=variant01&earringsProbability=0&eyebrows=variant02&eyes=variant12&features[]&featuresProbability=0&glasses=variant02&glassesProbability=100&hair=short16,short14,short11&hairColor=0e0e0e,6a4e35,796a45,ac6511,b9a05f&mouth=variant23&skinColor=ecad80&backgroundColor=ffdfbf,ffd5dc";
