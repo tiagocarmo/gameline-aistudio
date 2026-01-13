@@ -3,22 +3,39 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useGames } from '../context/GameContext';
 import { DEFAULT_AVATAR } from '../data';
+import { Menu } from 'lucide-react';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  onMenuToggle?: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
   const { userProfile } = useGames();
   const hasProfile = !!userProfile.name;
 
   return (
     <header className="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800/50 transition-all">
        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          {/* Logo - New Font, Impactful, No Icon */}
-          <Link to="/" className="group select-none">
-             <span className="font-['Orbitron'] text-2xl md:text-3xl font-black tracking-[0.2em] text-white group-hover:text-indigo-400 transition-colors drop-shadow-lg">
-                GAMELINE
-             </span>
-          </Link>
+          <div className="flex items-center gap-4">
+            {hasProfile && (
+              <button 
+                onClick={onMenuToggle}
+                className="p-2 -ml-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                aria-label="Abrir menu"
+              >
+                <Menu size={24} />
+              </button>
+            )}
+            
+            {/* Logo */}
+            <Link to="/" className="group select-none">
+               <span className="font-['Orbitron'] text-xl md:text-2xl font-black tracking-[0.2em] text-white group-hover:text-indigo-400 transition-colors drop-shadow-lg">
+                  GAMELINE
+               </span>
+            </Link>
+          </div>
 
-          {/* User Profile - Only visible if name is set (User is 'logged in') */}
+          {/* User Profile */}
           {hasProfile && (
              <Link to="/settings" className="flex items-center gap-4 group">
                 <div className="hidden md:flex flex-col items-end">

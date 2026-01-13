@@ -11,6 +11,7 @@ import Card from './atoms/Card';
 import Label from './atoms/Label';
 import Input from './atoms/Input';
 import Textarea from './atoms/TextArea';
+import StarRating from './atoms/StarRating';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './atoms/Select';
 
 const FinishGame: React.FC = () => {
@@ -28,16 +29,21 @@ const FinishGame: React.FC = () => {
   const [platformId, setPlatformId] = useState('');
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [is100Percent, setIs100Percent] = useState(false);
+  const [rating, setRating] = useState<number | null>(null);
   const [comment, setComment] = useState('');
 
   // Handle Game Selection
   const handleGameSelect = (id: string) => {
       setSelectedGameId(id);
       const game = games.find(g => g.id === id);
-      if (game && game.platformIds.length > 0) {
-          // If the game has multiple platforms, try to find one that is active in settings
-          const activePlatform = game.platformIds.find(pid => settings.activePlatforms.includes(pid));
-          setPlatformId(activePlatform || game.platformIds[0]); 
+      if (game) {
+          if (game.platformIds.length > 0) {
+              const activePlatform = game.platformIds.find(pid => settings.activePlatforms.includes(pid));
+              setPlatformId(activePlatform || game.platformIds[0]); 
+          }
+          if (game.rating !== undefined) {
+              setRating(game.rating);
+          }
       }
   };
 
@@ -50,6 +56,7 @@ const FinishGame: React.FC = () => {
 
     game.status = GameStatus.Completed;
     if (is100Percent) game.completionType = '100%';
+    if (rating !== null) game.rating = rating;
     
     addEvent({
         id: `e${Date.now()}`,
@@ -143,13 +150,18 @@ const FinishGame: React.FC = () => {
                         </Card>
                     </div>
 
+                    <Card>
+                        <Label>Sua Avaliação (1-5)</Label>
+                        <StarRating value={rating} onChange={setRating} className="py-2" />
+                    </Card>
+
                     {/* Type (100%) */}
                     <div 
                         onClick={() => setIs100Percent(!is100Percent)}
                         className={`
                             cursor-pointer group relative overflow-hidden rounded-2xl border p-6 transition-all duration-300
                             ${is100Percent 
-                                ? 'bg-yellow-500/10 border-yellow-500/50 shadow-[0_0_20px_rgba(234,179,8,0.1)]' 
+                                ? 'bg-yellow-500/10 border-yellow-500/50 shadow-[0_0_20px_rgba(234,179,8,0.15)]' 
                                 : 'bg-slate-800/50 border-slate-700/50 hover:border-slate-600'}
                         `}
                     >

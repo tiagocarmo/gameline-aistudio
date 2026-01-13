@@ -11,6 +11,7 @@ import Card from './atoms/Card';
 import Input from './atoms/Input';
 import Label from './atoms/Label';
 import Textarea from './atoms/TextArea';
+import StarRating from './atoms/StarRating';
 import { searchGames, ApiGameResult } from '../services/api';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './atoms/Select';
 
@@ -36,6 +37,7 @@ const AddGame: React.FC = () => {
   const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
   const [status, setStatus] = useState<GameStatus>(GameStatus.Playing);
   const [perception, setPerception] = useState<GamePerception>(GamePerception.Neutral);
+  const [rating, setRating] = useState<number | null>(null);
   const [comment, setComment] = useState('');
   
   // Handlers
@@ -126,6 +128,7 @@ const AddGame: React.FC = () => {
       platformIds: selectedPlatforms,
       status,
       perception,
+      rating: rating || undefined,
       generalComment: comment,
       playAgain: perception === GamePerception.Like,
     };
@@ -177,8 +180,6 @@ const AddGame: React.FC = () => {
       return (
         <div className="max-w-7xl mx-auto px-6 pb-24 pt-8">
             <div className="w-full">
-                {/* Cancel Button Removed */}
-                
                 <div className="text-left mb-8">
                     <Heading>Novo Jogo</Heading>
                     <Text variant="muted">Busque o jogo para verificar na biblioteca ou preencher automaticamente.</Text>
@@ -349,6 +350,30 @@ const AddGame: React.FC = () => {
                </div>
             </Card>
 
+            {/* Evaluation & Perception */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Card>
+                    <Label>Sua Avaliação (1-5)</Label>
+                    <StarRating value={rating} onChange={setRating} className="py-2" />
+                </Card>
+                <Card>
+                    <Label>Expectativa / Percepção</Label>
+                    <Select 
+                        value={perception} 
+                        onValueChange={(v) => setPerception(v as GamePerception)}
+                    >
+                        <SelectTrigger>
+                            <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {Object.values(GamePerception).map(p => (
+                                <SelectItem key={p} value={p}>{p}</SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </Card>
+            </div>
+
             {/* Platforms - Filtered by Settings */}
             <Card>
                 <Label required className="mb-4">Plataformas Jogadas</Label>
@@ -384,41 +409,22 @@ const AddGame: React.FC = () => {
                 )}
             </Card>
 
-            {/* Status & Perception */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card>
-                    <Label>Status Inicial</Label>
-                    <Select 
-                        value={status} 
-                        onValueChange={(v) => setStatus(v as GameStatus)}
-                    >
-                        <SelectTrigger>
-                            <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {Object.values(GameStatus).map(s => (
-                                <SelectItem key={s} value={s}>{s}</SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                </Card>
-                <Card>
-                    <Label>Expectativa / Percepção</Label>
-                    <Select 
-                        value={perception} 
-                        onValueChange={(v) => setPerception(v as GamePerception)}
-                    >
-                        <SelectTrigger>
-                            <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {Object.values(GamePerception).map(p => (
-                                <SelectItem key={p} value={p}>{p}</SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                </Card>
-            </div>
+            <Card>
+                <Label>Status Inicial</Label>
+                <Select 
+                    value={status} 
+                    onValueChange={(v) => setStatus(v as GameStatus)}
+                >
+                    <SelectTrigger>
+                        <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {Object.values(GameStatus).map(s => (
+                            <SelectItem key={s} value={s}>{s}</SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+            </Card>
 
             {/* Comment */}
             <Card>

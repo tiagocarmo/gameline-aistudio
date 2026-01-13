@@ -2,7 +2,7 @@
 import React from 'react';
 import { PLATFORMS } from '../data';
 import { useGames } from '../context/GameContext';
-import { Play, CheckCircle, RotateCcw, XCircle, Calendar, PauseCircle, Trophy, AlertTriangle, Star } from 'lucide-react';
+import { Play, CheckCircle, RotateCcw, XCircle, Calendar, PauseCircle, Trophy, Star, StarHalf } from 'lucide-react';
 import { TimelineEvent, Achievement, TimelineEventType } from '../types';
 import { Typography } from './atoms/Typography';
 import PlatformBadge from './molecules/PlatformBadge';
@@ -102,7 +102,6 @@ const Timeline: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-6 pb-24 pt-6">
-      {/* Removed max-w-3xl restriction to allow cards to expand full width */}
       <div className="w-full">
           <div className="max-w-3xl">
             <QuickStats />
@@ -126,23 +125,16 @@ const Timeline: React.FC = () => {
                     const config = getEventConfig(event.type);
                     const Icon = config.icon;
                     const dateObj = new Date(event.date);
-                    // Native date formatting to avoid new dependencies
                     const day = dateObj.getDate();
                     const month = dateObj.toLocaleDateString('pt-BR', { month: 'long' });
                     
-                    // --- Achievement Render ---
                     if (event.type === TimelineEventType.Achievement && event.achievement) {
                         return (
                             <div key={event.id} className="relative flex gap-6 pb-12 group w-full">
-                                {/* Timeline Line */}
                                 <div className="absolute left-[23px] top-12 bottom-0 w-0.5 bg-gradient-to-b from-border to-transparent" />
-                                
-                                {/* Icon Circle */}
                                 <div className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-slate-900 bg-yellow-500 text-slate-900 shadow-[0_0_15px_rgba(234,179,8,0.4)]">
                                     <Trophy size={20} />
                                 </div>
-
-                                {/* Content */}
                                 <div className="flex-1 rounded-2xl border border-yellow-500/20 bg-gradient-to-br from-slate-900 to-slate-800 p-5 shadow-sm relative overflow-hidden group-hover:border-yellow-500/40 transition-colors w-full">
                                     <div className="absolute top-0 right-0 p-3 opacity-5 text-yellow-500 transform rotate-12">
                                         <Trophy size={80} />
@@ -160,7 +152,6 @@ const Timeline: React.FC = () => {
                         );
                     }
 
-                    // --- Game Event Render ---
                     const game = games.find(g => g.id === event.gameId);
                     const platform = event.platformId ? PLATFORMS[event.platformId] : null;
 
@@ -168,21 +159,15 @@ const Timeline: React.FC = () => {
 
                     return (
                       <div key={event.id} className="relative flex gap-6 pb-12 group w-full">
-                        {/* Timeline Line */}
                         <div className="absolute left-[23px] top-12 bottom-0 w-0.5 bg-gradient-to-b from-border to-transparent" />
-                        
-                        {/* Icon Circle */}
                         <div className={cn(
                             "relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-4 border-background bg-card shadow-lg transition-all group-hover:scale-110",
                             config.color
                         )}>
                             <Icon size={20} />
                         </div>
-
-                        {/* Content Card */}
                         <div className="flex-1 rounded-2xl border border-border bg-card/40 backdrop-blur-sm p-4 md:p-5 shadow-sm transition-all hover:shadow-lg hover:border-primary/20 hover:bg-card/60 w-full">
                             <div className="flex items-start gap-4 md:gap-6">
-                                {/* Cover Art */}
                                 <div className="relative shrink-0 group/cover">
                                     <img 
                                         src={game.cover} 
@@ -197,7 +182,6 @@ const Timeline: React.FC = () => {
                                 </div>
 
                                 <div className="flex-1 min-w-0 py-1">
-                                    {/* Header: Type + Platform + Date */}
                                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2">
                                         <span className={cn("text-xs font-bold uppercase tracking-wide", config.color)}>
                                             {config.label}
@@ -212,12 +196,26 @@ const Timeline: React.FC = () => {
                                         </span>
                                     </div>
 
-                                    {/* Title */}
-                                    <Typography variant="h4" className="truncate mb-2 leading-tight">
-                                        {game.title}
-                                    </Typography>
+                                    <div className="flex items-center justify-between gap-4 mb-2">
+                                        <Typography variant="h4" className="truncate leading-tight">
+                                            {game.title}
+                                        </Typography>
+                                        
+                                        {game.rating && (
+                                            <div className="flex items-center gap-0.5 shrink-0">
+                                                {[...Array(5)].map((_, i) => (
+                                                    <Star 
+                                                        key={i} 
+                                                        size={12} 
+                                                        className={cn(
+                                                            i < game.rating! ? "fill-indigo-500 text-indigo-500" : "text-slate-700 fill-transparent"
+                                                        )}
+                                                    />
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
 
-                                    {/* Note */}
                                     {event.note ? (
                                         <div className="relative pl-3 border-l-2 border-primary/30 mt-3">
                                             <Typography variant="body-sm" className="text-muted-foreground italic">
@@ -225,7 +223,6 @@ const Timeline: React.FC = () => {
                                             </Typography>
                                         </div>
                                     ) : (
-                                        // If no note, show game status badge as filler info
                                         <div className="mt-2">
                                             <StatusBadge status={game.status} size="sm" />
                                         </div>
@@ -239,8 +236,6 @@ const Timeline: React.FC = () => {
                 </div>
               </section>
             ))}
-            
-             {/* End of Line Indicator */}
              <div className="flex flex-col items-center justify-center opacity-30 pt-8">
                 <div className="w-0.5 h-16 bg-gradient-to-b from-border to-transparent"></div>
                 <div className="w-2 h-2 rounded-full bg-border mt-1"></div>

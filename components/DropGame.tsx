@@ -9,6 +9,7 @@ import Button from './atoms/Button';
 import Card from './atoms/Card';
 import Label from './atoms/Label';
 import Textarea from './atoms/TextArea';
+import StarRating from './atoms/StarRating';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './atoms/Select';
 
 const DropGame: React.FC = () => {
@@ -21,7 +22,16 @@ const DropGame: React.FC = () => {
   );
 
   const [selectedGameId, setSelectedGameId] = useState('');
+  const [rating, setRating] = useState<number | null>(null);
   const [reason, setReason] = useState('');
+
+  const handleGameSelect = (id: string) => {
+    setSelectedGameId(id);
+    const game = games.find(g => g.id === id);
+    if (game && game.rating !== undefined) {
+        setRating(game.rating);
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,6 +42,7 @@ const DropGame: React.FC = () => {
 
     // Update Status
     game.status = GameStatus.Dropped;
+    if (rating !== null) game.rating = rating;
 
     // Add Event
     addEvent({
@@ -84,7 +95,7 @@ const DropGame: React.FC = () => {
                 <Label>Qual jogo você vai parar?</Label>
                 <Select 
                     value={selectedGameId}
-                    onValueChange={setSelectedGameId}
+                    onValueChange={handleGameSelect}
                 >
                     <SelectTrigger>
                         <SelectValue placeholder="Selecione um jogo..." />
@@ -105,6 +116,11 @@ const DropGame: React.FC = () => {
                             Isso marcará o jogo como "Cancelado" e criará um evento na sua timeline. Você poderá retomá-lo futuramente se desejar.
                         </Text>
                      </div>
+
+                     <Card>
+                        <Label>Avaliação até o momento (1-5)</Label>
+                        <StarRating value={rating} onChange={setRating} className="py-2" />
+                    </Card>
 
                      <Card>
                         <Label required>Motivo da desistência</Label>

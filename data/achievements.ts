@@ -12,15 +12,6 @@ export const ACHIEVEMENTS: Achievement[] = [
       unlocked: false
     },
     {
-      id: "first_platform_added",
-      type: "boolean",
-      title: "Onde tudo começa",
-      description: "Cadastrou a primeira plataforma.",
-      isSecret: false,
-      icon: "Monitor", 
-      unlocked: false
-    },
-    {
       id: "first_game_added",
       type: "boolean",
       title: "Primeira entrada na linha do tempo",
@@ -236,17 +227,6 @@ export const ACHIEVEMENTS: Achievement[] = [
       description: "Concluiu 10 jogos da mesma série.",
       isSecret: true,
       icon: "Heart",
-      unlocked: false
-    },
-    {
-      id: "play_on_5_platforms",
-      type: "progressive",
-      metric: 5,
-      currentValue: 0,
-      title: "Sem preconceito de hardware",
-      description: "Jogou em 5 plataformas diferentes.",
-      isSecret: false,
-      icon: "Shuffle",
       unlocked: false
     },
     {

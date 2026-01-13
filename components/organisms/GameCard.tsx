@@ -3,7 +3,7 @@ import React from 'react';
 import { Game, GamePerception } from '../../types';
 import { PLATFORMS } from '../../data';
 import StatusBadge from '../molecules/StatusBadge';
-import { Trophy, Heart, Gamepad2 } from 'lucide-react';
+import { Trophy, Heart, Gamepad2, Star } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import Badge from '../atoms/Badge';
 
@@ -48,6 +48,12 @@ const GameCard: React.FC<GameCardProps> = ({ game, onClick, variant = 'default' 
           <div className="flex items-center gap-2 mt-1">
             <StatusBadge status={game.status} size="sm" />
             {is100Percent && <Badge size="sm" className="bg-yellow-500/10 text-yellow-500 border-yellow-500/20 px-1 py-0"><Trophy size={10} /></Badge>}
+            {game.rating && (
+              <div className="flex items-center text-[10px] font-bold text-indigo-400">
+                <Star size={10} className="fill-current mr-0.5" />
+                {game.rating}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -86,24 +92,31 @@ const GameCard: React.FC<GameCardProps> = ({ game, onClick, variant = 'default' 
           <StatusBadge status={game.status} showIcon className="backdrop-blur-md bg-black/40 border-white/10 text-white shadow-lg" />
         </div>
 
-        {/* Favorite badge (Top Right) */}
-        {isFavorite && (
-          <div className="absolute top-3 right-3 z-10">
-            <div className="p-1.5 rounded-full bg-black/40 backdrop-blur-md text-red-500 border border-white/10 shadow-lg">
-                <Heart size={14} fill="currentColor" />
-            </div>
-          </div>
-        )}
-        
-        {/* 100% Badge (Top Right, below favorite) */}
-        {is100Percent && (
-            <div className={`absolute ${isFavorite ? 'top-11' : 'top-3'} right-3 z-10`}>
+        {/* Top Right Badges */}
+        <div className="absolute top-3 right-3 z-10 flex flex-col items-end gap-2">
+            {/* Rating Indicator */}
+            {game.rating && (
+                <div className="flex items-center gap-1 bg-black/40 backdrop-blur-md border border-white/10 text-indigo-400 px-2 py-1 rounded-full shadow-lg">
+                    <Star size={12} className="fill-indigo-500" />
+                    <span className="text-xs font-black">{game.rating}</span>
+                </div>
+            )}
+            
+            {/* Favorite badge */}
+            {isFavorite && (
+              <div className="p-1.5 rounded-full bg-black/40 backdrop-blur-md text-red-500 border border-white/10 shadow-lg">
+                  <Heart size={14} fill="currentColor" />
+              </div>
+            )}
+            
+            {/* 100% Badge */}
+            {is100Percent && (
                 <div className="flex items-center gap-1 bg-yellow-400 text-black text-[10px] font-black px-2 py-1 rounded shadow-lg">
                     <Trophy size={10} className="fill-black" />
                     <span>100%</span>
                 </div>
-            </div>
-        )}
+            )}
+        </div>
 
         {/* Bottom info on cover */}
         <div className="absolute bottom-0 left-0 right-0 p-4 z-10 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">

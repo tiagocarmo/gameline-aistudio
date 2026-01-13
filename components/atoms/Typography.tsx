@@ -27,10 +27,13 @@ const typographyVariants = cva('text-foreground', {
   },
 });
 
+// Explicitly adding className and children to TypographyProps to resolve property access errors
 export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
   variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'body' | 'body-sm' | 'caption' | 'label' | null;
   gradient?: boolean | null;
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'label' | 'div';
+  className?: string;
+  children?: React.ReactNode;
 }
 
 export const Typography = ({

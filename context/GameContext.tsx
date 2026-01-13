@@ -182,14 +182,10 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       // 2. Firsts
       if (games.length > 0) unlock('first_game_added');
-      if (games.some(g => g.platformIds.length > 0)) unlock('first_platform_added');
       if (events.some(e => e.type === TimelineEventType.Start)) unlock('first_game_started');
       if (events.some(e => e.type === TimelineEventType.Finish)) unlock('first_game_completed');
       if (events.some(e => e.type === TimelineEventType.Drop)) unlock('first_game_abandoned');
       if (games.some(g => g.status === GameStatus.Completed && g.completionType === '100%')) unlock('first_game_completed_100');
-      
-      const uniquePlatforms = new Set(games.flatMap(g => g.platformIds)).size;
-      updateProgress('play_on_5_platforms', uniquePlatforms);
 
       // Monthly/Yearly logic
       const finishedEvents = events.filter(e => e.type === TimelineEventType.Finish);
