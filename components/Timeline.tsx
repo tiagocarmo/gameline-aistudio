@@ -71,7 +71,8 @@ const Timeline: React.FC = () => {
     .filter(a => a.unlocked && a.unlockedDate)
     .map(a => ({
       id: `ach-${a.id}`,
-      date: a.unlockedDate!.split('T')[0],
+      // Keep full unlocked datetime so ordering includes time
+      date: a.unlockedDate!,
       type: TimelineEventType.Achievement,
       achievement: a,
       gameId: ''
@@ -88,10 +89,10 @@ const Timeline: React.FC = () => {
     return (b.id || '').localeCompare(a.id || '');
   });
 
-  // Grouping
+  // Grouping by year using Date to correctly handle full datetimes
   const eventsByYear: Record<string, DisplayEvent[]> = {};
   mixedEvents.forEach(event => {
-    const year = event.date.split('-')[0];
+    const year = new Date(event.date).getFullYear().toString();
     if (!eventsByYear[year]) eventsByYear[year] = [];
     eventsByYear[year].push(event);
   });

@@ -68,9 +68,12 @@ const FinishGame: React.FC = () => {
     if (is100Percent) game.completionType = '100%';
     if (rating !== null) game.rating = rating;
 
+    // Ensure full ISO datetime: if `date` has no time, append current time
+    const eventDate = date.includes('T') ? date : new Date(`${date}T${new Date().toTimeString().split(' ')[0]}`).toISOString();
+
     addEvent({
       id: `e${Date.now()}`,
-      date: date,
+      date: eventDate,
       type: TimelineEventType.Finish,
       gameId: selectedGameId,
       platformId: platformId,

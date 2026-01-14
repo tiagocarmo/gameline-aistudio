@@ -55,9 +55,12 @@ const DropGame: React.FC = () => {
     if (rating !== null) game.rating = rating;
 
     // Add Event
+    const todayDateOnly = new Date().toISOString().split('T')[0];
+    const eventDate = todayDateOnly.includes('T') ? todayDateOnly : new Date(`${todayDateOnly}T${new Date().toTimeString().split(' ')[0]}`).toISOString();
+
     addEvent({
       id: `e${Date.now()}`,
-      date: new Date().toISOString().split('T')[0],
+      date: eventDate,
       type: TimelineEventType.Drop,
       gameId: selectedGameId,
       platformId: game.platformIds[0],

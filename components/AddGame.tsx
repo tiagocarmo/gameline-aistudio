@@ -177,9 +177,12 @@ const AddGame: React.FC = () => {
     }
 
     // 3. Create Timeline Event
+    const todayDateOnly = new Date().toISOString().split('T')[0];
+    const eventDate = todayDateOnly.includes('T') ? todayDateOnly : new Date(`${todayDateOnly}T${new Date().toTimeString().split(' ')[0]}`).toISOString();
+
     addEvent({
       id: `e${Date.now()}`,
-      date: new Date().toISOString().split('T')[0],
+      date: eventDate,
       type: eventType,
       gameId: newGameId,
       platformId: selectedPlatforms[0]

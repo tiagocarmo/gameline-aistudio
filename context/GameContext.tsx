@@ -90,9 +90,22 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [events, setEvents] = useState<TimelineEvent[]>(() => {
     try {
       const saved = localStorage.getItem('gl_events');
-      return saved ? JSON.parse(saved) : TIMELINE_EVENTS;
+      const raw: TimelineEvent[] = saved ? JSON.parse(saved) : TIMELINE_EVENTS;
+
+      // Normalize date-only strings (YYYY-MM-DD) to full ISO datetimes at UTC midnight
+      return raw.map(ev => {
+        if (/^\d{4}-\d{2}-\d{2}$/.test(ev.date)) {
+          return { ...ev, date: new Date(`${ev.date}T00:00:00Z`).toISOString() };
+        }
+        return ev;
+      });
     } catch {
-      return TIMELINE_EVENTS;
+      return TIMELINE_EVENTS.map(ev => {
+        if (/^\d{4}-\d{2}-\d{2}$/.test(ev.date)) {
+          return { ...ev, date: new Date(`${ev.date}T00:00:00Z`).toISOString() };
+        }
+        return ev;
+      });
     }
   });
 

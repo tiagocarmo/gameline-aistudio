@@ -62,7 +62,11 @@ export interface Game {
 
 export interface TimelineEvent {
   id: string;
-  date: string; // ISO String YYYY-MM-DD
+  // ISO string with date or date-time. Examples:
+  // - date only: 2024-01-14
+  // - date + time: 2024-01-14T18:25:43.511Z
+  // The app will use the full ISO datetime for ordering, but render only the localized date for display.
+  date: string;
   type: TimelineEventType;
   gameId: string;
   platformId?: string; // Specific platform for this event
