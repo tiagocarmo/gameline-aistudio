@@ -1,8 +1,15 @@
-
 import React, { useEffect } from 'react';
-import { 
-  BarChart2, Gamepad2, Award, Home, Trophy, 
-  XCircle, Plus, Settings as SettingsIcon, X, Zap 
+import {
+  BarChart2,
+  Gamepad2,
+  Award,
+  Home,
+  Trophy,
+  XCircle,
+  Plus,
+  Settings as SettingsIcon,
+  X,
+  Zap
 } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { cn } from '../lib/utils';
@@ -12,16 +19,16 @@ interface SideDrawerProps {
   onClose: () => void;
 }
 
-const NavItem = ({ 
-  icon: Icon, 
-  label, 
-  onClick, 
+const NavItem = ({
+  icon: Icon,
+  label,
+  onClick,
   active = false,
-  variant = 'default' 
-}: { 
-  icon: any, 
-  label: string, 
-  onClick: () => void, 
+  variant = 'default'
+}: {
+  icon: any,
+  label: string,
+  onClick: () => void,
   active?: boolean,
   variant?: 'default' | 'action'
 }) => (
@@ -29,18 +36,18 @@ const NavItem = ({
     onClick={onClick}
     className={cn(
       "w-full flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-200 group",
-      active 
-        ? "bg-indigo-600/10 text-indigo-400 border border-indigo-500/20" 
+      active
+        ? "bg-indigo-600/10 text-indigo-400 border border-indigo-500/20"
         : "text-slate-400 hover:text-white hover:bg-slate-800 border border-transparent",
       variant === 'action' && !active && "text-slate-300"
     )}
   >
-    <Icon 
-      size={20} 
+    <Icon
+      size={20}
       className={cn(
-        "transition-colors", 
+        "transition-colors",
         active ? "text-indigo-400" : "text-slate-500 group-hover:text-indigo-400"
-      )} 
+      )}
     />
     <span className="font-bold text-sm tracking-wide">{label}</span>
     {active && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.6)]" />}
@@ -63,7 +70,7 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isOpen, onClose }) => {
   return (
     <>
       {/* Backdrop */}
-      <div 
+      <div
         className={cn(
           "fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[60] transition-opacity duration-300",
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
@@ -83,7 +90,7 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isOpen, onClose }) => {
           <span className="font-['Orbitron'] text-xl font-black tracking-widest text-indigo-500">
             MENU
           </span>
-          <button 
+          <button
             onClick={onClose}
             className="p-2 rounded-lg text-slate-500 hover:text-white hover:bg-slate-800 transition-colors"
           >
@@ -93,33 +100,33 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isOpen, onClose }) => {
 
         {/* Navigation Content */}
         <div className="flex-1 overflow-y-auto py-6 px-4 space-y-8">
-          
+
           {/* Main Section */}
           <div className="space-y-1">
             <h3 className="px-4 text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3">Navegação</h3>
-            <NavItem 
-              icon={Home} 
-              label="Timeline" 
-              onClick={() => handleNavigate('/')} 
-              active={location.pathname === '/'} 
+            <NavItem
+              icon={Home}
+              label="Timeline"
+              onClick={() => handleNavigate('/')}
+              active={location.pathname === '/'}
             />
-            <NavItem 
-              icon={BarChart2} 
-              label="Estatísticas" 
-              onClick={() => handleNavigate('/stats')} 
-              active={location.pathname === '/stats'} 
+            <NavItem
+              icon={BarChart2}
+              label="Estatísticas"
+              onClick={() => handleNavigate('/stats')}
+              active={location.pathname === '/stats'}
             />
-            <NavItem 
-              icon={Gamepad2} 
-              label="Biblioteca" 
-              onClick={() => handleNavigate('/library')} 
-              active={location.pathname === '/library'} 
+            <NavItem
+              icon={Gamepad2}
+              label="Biblioteca"
+              onClick={() => handleNavigate('/library')}
+              active={location.pathname === '/library'}
             />
-            <NavItem 
-              icon={Award} 
-              label="Conquistas" 
-              onClick={() => handleNavigate('/achievements')} 
-              active={location.pathname === '/achievements'} 
+            <NavItem
+              icon={Award}
+              label="Conquistas"
+              onClick={() => handleNavigate('/achievements')}
+              active={location.pathname === '/achievements'}
             />
           </div>
 
@@ -128,25 +135,25 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isOpen, onClose }) => {
             <h3 className="px-4 flex items-center gap-2 text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3">
               <Zap size={10} className="text-indigo-400" /> Ações Rápidas
             </h3>
-            <NavItem 
-              icon={Plus} 
-              label="Novo Jogo" 
-              onClick={() => handleNavigate('/add')} 
-              active={location.pathname === '/add'} 
+            <NavItem
+              icon={Plus}
+              label="Novo Jogo"
+              onClick={() => handleNavigate('/add')}
+              active={location.pathname === '/add'}
               variant="action"
             />
-            <NavItem 
-              icon={Trophy} 
-              label="Concluir Jogo" 
-              onClick={() => handleNavigate('/finish')} 
-              active={location.pathname === '/finish'} 
+            <NavItem
+              icon={Trophy}
+              label="Concluir Jogo"
+              onClick={() => handleNavigate('/finish')}
+              active={location.pathname === '/finish'}
               variant="action"
             />
-            <NavItem 
-              icon={XCircle} 
-              label="Desistir" 
-              onClick={() => handleNavigate('/drop')} 
-              active={location.pathname === '/drop'} 
+            <NavItem
+              icon={XCircle}
+              label="Desistir"
+              onClick={() => handleNavigate('/drop')}
+              active={location.pathname === '/drop'}
               variant="action"
             />
           </div>
@@ -154,11 +161,11 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isOpen, onClose }) => {
 
         {/* Footer */}
         <div className="p-4 border-t border-slate-800/50">
-          <NavItem 
-            icon={SettingsIcon} 
-            label="Configurações" 
-            onClick={() => handleNavigate('/settings')} 
-            active={location.pathname === '/settings'} 
+          <NavItem
+            icon={SettingsIcon}
+            label="Configurações"
+            onClick={() => handleNavigate('/settings')}
+            active={location.pathname === '/settings'}
           />
           <div className="mt-4 px-4 text-[10px] text-slate-600 font-medium text-center italic">
             GameLine v1.0 • Sua história gamer

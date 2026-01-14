@@ -1,4 +1,3 @@
-
 export * from './platforms';
 export * from './achievements';
 export * from './initial-data';

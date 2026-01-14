@@ -1,4 +1,3 @@
-
 export enum GameStatus {
   Playing = 'Em Andamento',
   Paused = 'Pausado',
@@ -27,7 +26,7 @@ export enum TimelineEventType {
   Pause = 'pause',
   Drop = 'drop',
   // Achievement is a virtual event type for the timeline view, but useful to have in the enum context
-  Achievement = 'achievement' 
+  Achievement = 'achievement'
 }
 
 export interface Platform {

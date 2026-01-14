@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { GameStatus } from '../../types';
 import { cn } from '../../lib/utils';

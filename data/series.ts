@@ -1,4 +1,3 @@
-
 import { Series } from '../types';
 
 export const SERIES: Record<string, Series> = {

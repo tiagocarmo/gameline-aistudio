@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -11,14 +10,14 @@ const Label = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> & VariantProps<typeof labelVariants> & { required?: boolean }
 >(({ className, children, required, ...props }, ref) => (
-  <LabelPrimitive.Root 
-    ref={ref} 
+  <LabelPrimitive.Root
+    ref={ref}
     className={cn(
-        labelVariants(), 
-        "block mb-2 text-xs font-bold text-slate-500 uppercase tracking-wide", // Maintaining GameLine visual identity
-        className
-    )} 
-    {...props} 
+      labelVariants(),
+      "block mb-2 text-xs font-bold text-slate-500 uppercase tracking-wide", // Maintaining GameLine visual identity
+      className
+    )}
+    {...props}
   >
     {children}
     {required && <span className="text-red-400 ml-1">*</span>}

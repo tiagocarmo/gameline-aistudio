@@ -1,4 +1,3 @@
-
 import { Game, TimelineEvent } from '../types';
 
 export const GAMES: Game[] = [];

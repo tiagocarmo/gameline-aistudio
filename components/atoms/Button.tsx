@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { LucideIcon } from 'lucide-react';
 import { cn } from '../../lib/utils';
@@ -10,17 +9,17 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ 
-  children, 
-  variant = 'primary', 
+const Button: React.FC<ButtonProps> = ({
+  children,
+  variant = 'primary',
   size = 'default',
-  icon: Icon, 
-  className = '', 
+  icon: Icon,
+  className = '',
   fullWidth = false,
-  ...props 
+  ...props
 }) => {
   const baseStyles = "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0";
-  
+
   const variants: Record<string, string> = {
     primary: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm",
     secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-sm",
@@ -43,14 +42,14 @@ const Button: React.FC<ButtonProps> = ({
   const computedSize = variant === 'icon' && size === 'default' ? sizes.icon : sizes[size];
 
   return (
-    <button 
+    <button
       className={cn(
-        baseStyles, 
-        variants[variant] || variants.primary, 
-        computedSize, 
+        baseStyles,
+        variants[variant] || variants.primary,
+        computedSize,
         fullWidth ? 'w-full' : '',
         className
-      )} 
+      )}
       {...props}
     >
       {Icon && <Icon className="size-4" />}

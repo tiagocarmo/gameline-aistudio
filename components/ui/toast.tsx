@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import * as ToastPrimitives from "@radix-ui/react-toast";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -45,16 +44,16 @@ const Toast = React.forwardRef<
 >(({ className, variant, children, ...props }, ref) => {
   return (
     <ToastPrimitives.Root ref={ref} className={cn(toastVariants({ variant }), className)} {...props}>
-       {/* Background Watermark for Achievements */}
-       {variant === 'achievement' && (
-         <div className="absolute -right-4 -bottom-6 pointer-events-none opacity-10">
-            <Trophy size={96} className="text-yellow-400 -rotate-12" />
-         </div>
-       )}
-       {/* Content */}
-       <div className="relative z-10 flex w-full items-center justify-between space-x-4">
-          {children}
-       </div>
+      {/* Background Watermark for Achievements */}
+      {variant === 'achievement' && (
+        <div className="absolute -right-4 -bottom-6 pointer-events-none opacity-10">
+          <Trophy size={96} className="text-yellow-400 -rotate-12" />
+        </div>
+      )}
+      {/* Content */}
+      <div className="relative z-10 flex w-full items-center justify-between space-x-4">
+        {children}
+      </div>
     </ToastPrimitives.Root>
   );
 });

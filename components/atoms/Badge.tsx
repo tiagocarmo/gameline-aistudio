@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from '../../lib/utils';
 
@@ -8,19 +7,19 @@ interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   size?: 'sm' | 'md';
   // Keeping color prop for platform specific colors (legacy support)
-  color?: string; 
+  color?: string;
 }
 
-const Badge: React.FC<BadgeProps> = ({ 
-  children, 
-  variant = 'default', 
+const Badge: React.FC<BadgeProps> = ({
+  children,
+  variant = 'default',
   size = 'md',
   color,
   className = '',
   ...props
 }) => {
   const baseStyles = "inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2";
-  
+
   const variants = {
     default: "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
     secondary: "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Game, GamePerception } from '../../types';
 import { PLATFORMS } from '../../data';
@@ -29,20 +28,20 @@ const GameCard: React.FC<GameCardProps> = ({ game, onClick, variant = 'default' 
         )}
       >
         <div className="h-16 w-12 shrink-0 overflow-hidden rounded-lg bg-muted relative">
-            {game.cover ? (
+          {game.cover ? (
             <img
-                src={game.cover}
-                alt={game.title}
-                className="h-full w-full object-cover"
-                loading="lazy"
+              src={game.cover}
+              alt={game.title}
+              className="h-full w-full object-cover"
+              loading="lazy"
             />
-            ) : (
-             <div className="flex h-full w-full items-center justify-center">
-                 <Gamepad2 className="text-muted-foreground/50" size={20} />
-             </div>
-            )}
+          ) : (
+            <div className="flex h-full w-full items-center justify-center">
+              <Gamepad2 className="text-muted-foreground/50" size={20} />
+            </div>
+          )}
         </div>
-        
+
         <div className="flex-1 min-w-0">
           <h3 className="font-medium text-sm truncate text-foreground group-hover:text-primary transition-colors">{game.title}</h3>
           <div className="flex items-center gap-2 mt-1">
@@ -94,28 +93,28 @@ const GameCard: React.FC<GameCardProps> = ({ game, onClick, variant = 'default' 
 
         {/* Top Right Badges */}
         <div className="absolute top-3 right-3 z-10 flex flex-col items-end gap-2">
-            {/* Rating Indicator */}
-            {game.rating && (
-                <div className="flex items-center gap-1 bg-black/40 backdrop-blur-md border border-white/10 text-indigo-400 px-2 py-1 rounded-full shadow-lg">
-                    <Star size={12} className="fill-indigo-500" />
-                    <span className="text-xs font-black">{game.rating}</span>
-                </div>
-            )}
-            
-            {/* Favorite badge */}
-            {isFavorite && (
-              <div className="p-1.5 rounded-full bg-black/40 backdrop-blur-md text-red-500 border border-white/10 shadow-lg">
-                  <Heart size={14} fill="currentColor" />
-              </div>
-            )}
-            
-            {/* 100% Badge */}
-            {is100Percent && (
-                <div className="flex items-center gap-1 bg-yellow-400 text-black text-[10px] font-black px-2 py-1 rounded shadow-lg">
-                    <Trophy size={10} className="fill-black" />
-                    <span>100%</span>
-                </div>
-            )}
+          {/* Rating Indicator */}
+          {game.rating && (
+            <div className="flex items-center gap-1 bg-black/40 backdrop-blur-md border border-white/10 text-indigo-400 px-2 py-1 rounded-full shadow-lg">
+              <Star size={12} className="fill-indigo-500" />
+              <span className="text-xs font-black">{game.rating}</span>
+            </div>
+          )}
+
+          {/* Favorite badge */}
+          {isFavorite && (
+            <div className="p-1.5 rounded-full bg-black/40 backdrop-blur-md text-red-500 border border-white/10 shadow-lg">
+              <Heart size={14} fill="currentColor" />
+            </div>
+          )}
+
+          {/* 100% Badge */}
+          {is100Percent && (
+            <div className="flex items-center gap-1 bg-yellow-400 text-black text-[10px] font-black px-2 py-1 rounded shadow-lg">
+              <Trophy size={10} className="fill-black" />
+              <span>100%</span>
+            </div>
+          )}
         </div>
 
         {/* Bottom info on cover */}
@@ -123,13 +122,13 @@ const GameCard: React.FC<GameCardProps> = ({ game, onClick, variant = 'default' 
           <h3 className="font-display font-bold text-white text-lg leading-tight mb-3 line-clamp-2 drop-shadow-md group-hover:text-primary-foreground transition-colors">
             {game.title}
           </h3>
-          
+
           {/* Platforms */}
           <div className="flex flex-wrap gap-1.5 opacity-90 group-hover:opacity-100 transition-opacity">
             {platformObjects.slice(0, 3).map((platform) => (
               <Badge
                 key={platform.id}
-                color={platform.color} 
+                color={platform.color}
                 size="sm"
                 className="backdrop-blur-sm shadow-sm"
               >

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { LucideIcon } from 'lucide-react';
 import { cn } from '../../lib/utils';
@@ -15,26 +14,26 @@ interface KpiCardProps {
   variant?: 'default' | 'gradient';
 }
 
-const KpiCard: React.FC<KpiCardProps> = ({ 
-  label, 
-  value, 
-  icon: Icon, 
-  color = "text-primary", 
-  subLabel, 
-  onClick, 
+const KpiCard: React.FC<KpiCardProps> = ({
+  label,
+  value,
+  icon: Icon,
+  color = "text-primary",
+  subLabel,
+  onClick,
   className = '',
   variant = 'default'
 }) => {
   const isGradient = variant === 'gradient';
-  
+
   return (
     <div
       onClick={onClick}
       className={cn(
         'group relative flex flex-col justify-between overflow-hidden rounded-2xl border p-6 transition-all duration-300',
         onClick && 'cursor-pointer hover:-translate-y-1 hover:shadow-lg',
-        isGradient 
-          ? 'bg-gradient-to-br from-primary to-secondary text-white border-transparent' 
+        isGradient
+          ? 'bg-gradient-to-br from-primary to-secondary text-white border-transparent'
           : 'bg-card text-card-foreground border-border hover:border-primary/20',
         className
       )}
@@ -47,31 +46,31 @@ const KpiCard: React.FC<KpiCardProps> = ({
           <Icon size={24} />
         </div>
       </div>
-      
+
       <div>
         <Heading level={2} className={cn("!text-3xl font-bold mb-1", isGradient ? "text-white" : "text-foreground")}>
           {value}
         </Heading>
-        
+
         <div className="flex items-center gap-2">
-            <Text variant="small" className={cn("font-medium uppercase tracking-wider", isGradient ? "text-white/80" : "text-muted-foreground")}>
+          <Text variant="small" className={cn("font-medium uppercase tracking-wider", isGradient ? "text-white/80" : "text-muted-foreground")}>
             {label}
-            </Text>
-            {subLabel && (
-                <span className={cn("text-xs", isGradient ? "text-white/60" : "text-muted-foreground/60")}>
-                    {subLabel}
-                </span>
-            )}
+          </Text>
+          {subLabel && (
+            <span className={cn("text-xs", isGradient ? "text-white/60" : "text-muted-foreground/60")}>
+              {subLabel}
+            </span>
+          )}
         </div>
       </div>
 
       {/* Background decoration */}
-      <Icon 
+      <Icon
         className={cn(
-            "absolute -right-6 -bottom-6 opacity-5 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12", 
-            isGradient ? "text-white" : color
-        )} 
-        size={120} 
+          "absolute -right-6 -bottom-6 opacity-5 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12",
+          isGradient ? "text-white" : color
+        )}
+        size={120}
       />
     </div>
   );

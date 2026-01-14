@@ -1,4 +1,3 @@
-
 import { Platform, PlatformCategory } from '../types';
 
 // Organized based on the provided PDF and User's specific hardware list

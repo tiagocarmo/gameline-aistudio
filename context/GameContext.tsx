@@ -1,7 +1,24 @@
-
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Game, TimelineEvent, Achievement, NotificationToast, GameStatus, UserProfile, AppSettings, TimelineEventType } from '../types';
-import { GAMES, TIMELINE_EVENTS, ACHIEVEMENTS, DEFAULT_AVATAR } from '../data';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect
+} from 'react';
+import {
+  Game,
+  TimelineEvent,
+  Achievement,
+  GameStatus,
+  UserProfile,
+  AppSettings,
+  TimelineEventType
+} from '../types';
+import {
+  GAMES,
+  TIMELINE_EVENTS,
+  ACHIEVEMENTS,
+  DEFAULT_AVATAR
+} from '../data';
 import { toast } from '../hooks/use-toast';
 
 interface GameContextType {
@@ -38,23 +55,23 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const saved = localStorage.getItem('gl_settings');
       if (saved) {
-          const parsed = JSON.parse(saved);
-          return { ...parsed, theme: 'dark', enableNotifications: true };
+        const parsed = JSON.parse(saved);
+        return { ...parsed, theme: 'dark', enableNotifications: true };
       }
-      
+
       const defaultActivePlatforms = [
-          'ios', 
-          'mac', 
-          'pc_windows', 
-          'ps1', 'ps2', 'ps5', 'psvita',
-          'xbox_one', 'xbox_series',
-          'switch', 'gba'
+        'ios',
+        'mac',
+        'pc_windows',
+        'ps1', 'ps2', 'ps5', 'psvita',
+        'xbox_one', 'xbox_series',
+        'switch', 'gba'
       ];
 
-      return { 
-          theme: 'dark', 
-          enableNotifications: true, 
-          activePlatforms: defaultActivePlatforms 
+      return {
+        theme: 'dark',
+        enableNotifications: true,
+        activePlatforms: defaultActivePlatforms
       };
     } catch {
       return { theme: 'dark', enableNotifications: true, activePlatforms: [] };
@@ -69,7 +86,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return GAMES;
     }
   });
-  
+
   const [events, setEvents] = useState<TimelineEvent[]>(() => {
     try {
       const saved = localStorage.getItem('gl_events');
@@ -80,12 +97,12 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   });
 
   const [achievements, setAchievements] = useState<Achievement[]>(() => {
-     try {
+    try {
       const saved = localStorage.getItem('gl_achievements');
       const savedAchievements: Achievement[] = saved ? JSON.parse(saved) : [];
       return ACHIEVEMENTS.map(constantAch => {
-          const savedAch = savedAchievements.find(s => s.id === constantAch.id);
-          return savedAch ? { ...constantAch, unlocked: savedAch.unlocked, unlockedDate: savedAch.unlockedDate, currentValue: savedAch.currentValue } : constantAch;
+        const savedAch = savedAchievements.find(s => s.id === constantAch.id);
+        return savedAch ? { ...constantAch, unlocked: savedAch.unlocked, unlockedDate: savedAch.unlockedDate, currentValue: savedAch.currentValue } : constantAch;
       });
     } catch {
       return ACHIEVEMENTS;
@@ -137,104 +154,104 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const resetData = () => {
-     localStorage.clear();
-     window.location.reload();
+    localStorage.clear();
+    window.location.reload();
   };
 
   // --- ACHIEVEMENT ENGINE ---
   const checkAchievements = () => {
-      const newAchievements = [...achievements];
-      let hasChanges = false;
-      
-      const unlock = (id: string) => {
-          const idx = newAchievements.findIndex(a => a.id === id);
-          if (idx !== -1 && !newAchievements[idx].unlocked) {
-              newAchievements[idx].unlocked = true;
-              newAchievements[idx].unlockedDate = new Date().toISOString();
-              hasChanges = true;
-              
-              // Notify using new Toast variant
-              toast({
-                  title: "Conquista Desbloqueada!",
-                  description: newAchievements[idx].title,
-                  variant: "achievement"
-              });
-          }
-      };
+    const newAchievements = [...achievements];
+    let hasChanges = false;
 
-      const updateProgress = (id: string, value: number) => {
-          const idx = newAchievements.findIndex(a => a.id === id);
-          if (idx !== -1) {
-              newAchievements[idx].currentValue = value;
-              if (newAchievements[idx].metric && value >= newAchievements[idx].metric!) {
-                  unlock(id);
-              }
-          }
-      };
+    const unlock = (id: string) => {
+      const idx = newAchievements.findIndex(a => a.id === id);
+      if (idx !== -1 && !newAchievements[idx].unlocked) {
+        newAchievements[idx].unlocked = true;
+        newAchievements[idx].unlockedDate = new Date().toISOString();
+        hasChanges = true;
 
-      // 1. Basic Counts
-      updateProgress('complete_3_games', games.filter(g => g.status === GameStatus.Completed).length);
-      updateProgress('complete_5_games', games.filter(g => g.status === GameStatus.Completed).length);
-      updateProgress('complete_10_games', games.filter(g => g.status === GameStatus.Completed).length);
-      updateProgress('complete_20_games', games.filter(g => g.status === GameStatus.Completed).length);
-      updateProgress('complete_50_games', games.filter(g => g.status === GameStatus.Completed).length);
-      updateProgress('complete_100_games', games.filter(g => g.status === GameStatus.Completed).length);
-      
-      // 2. Firsts
-      if (games.length > 0) unlock('first_game_added');
-      if (events.some(e => e.type === TimelineEventType.Start)) unlock('first_game_started');
-      if (events.some(e => e.type === TimelineEventType.Finish)) unlock('first_game_completed');
-      if (events.some(e => e.type === TimelineEventType.Drop)) unlock('first_game_abandoned');
-      if (games.some(g => g.status === GameStatus.Completed && g.completionType === '100%')) unlock('first_game_completed_100');
-
-      // Monthly/Yearly logic
-      const finishedEvents = events.filter(e => e.type === TimelineEventType.Finish);
-      const eventsByMonth: Record<string, number> = {};
-      const eventsByYear: Record<string, number> = {};
-      
-      finishedEvents.forEach(e => {
-          const d = new Date(e.date);
-          const monthKey = `${d.getFullYear()}-${d.getMonth()}`;
-          const yearKey = `${d.getFullYear()}`;
-          
-          eventsByMonth[monthKey] = (eventsByMonth[monthKey] || 0) + 1;
-          eventsByYear[yearKey] = (eventsByYear[yearKey] || 0) + 1;
-      });
-
-      const maxMonth = Math.max(0, ...Object.values(eventsByMonth));
-      const maxYear = Math.max(0, ...Object.values(eventsByYear));
-
-      if (maxMonth >= 3) unlock('complete_3_games_month');
-      if (maxMonth >= 10) unlock('complete_10_games_month');
-      if (maxMonth >= 30) unlock('complete_30_games_month');
-
-      if (maxYear >= 10) unlock('complete_10_games_year');
-      if (maxYear >= 25) unlock('complete_25_games_year');
-      if (maxYear >= 50) unlock('complete_50_games_year');
-      
-      if (hasChanges) {
-          setAchievements(newAchievements);
+        // Notify using new Toast variant
+        toast({
+          title: "Conquista Desbloqueada!",
+          description: newAchievements[idx].title,
+          variant: "achievement"
+        });
       }
+    };
+
+    const updateProgress = (id: string, value: number) => {
+      const idx = newAchievements.findIndex(a => a.id === id);
+      if (idx !== -1) {
+        newAchievements[idx].currentValue = value;
+        if (newAchievements[idx].metric && value >= newAchievements[idx].metric!) {
+          unlock(id);
+        }
+      }
+    };
+
+    // 1. Basic Counts
+    updateProgress('complete_3_games', games.filter(g => g.status === GameStatus.Completed).length);
+    updateProgress('complete_5_games', games.filter(g => g.status === GameStatus.Completed).length);
+    updateProgress('complete_10_games', games.filter(g => g.status === GameStatus.Completed).length);
+    updateProgress('complete_20_games', games.filter(g => g.status === GameStatus.Completed).length);
+    updateProgress('complete_50_games', games.filter(g => g.status === GameStatus.Completed).length);
+    updateProgress('complete_100_games', games.filter(g => g.status === GameStatus.Completed).length);
+
+    // 2. Firsts
+    if (games.length > 0) unlock('first_game_added');
+    if (events.some(e => e.type === TimelineEventType.Start)) unlock('first_game_started');
+    if (events.some(e => e.type === TimelineEventType.Finish)) unlock('first_game_completed');
+    if (events.some(e => e.type === TimelineEventType.Drop)) unlock('first_game_abandoned');
+    if (games.some(g => g.status === GameStatus.Completed && g.completionType === '100%')) unlock('first_game_completed_100');
+
+    // Monthly/Yearly logic
+    const finishedEvents = events.filter(e => e.type === TimelineEventType.Finish);
+    const eventsByMonth: Record<string, number> = {};
+    const eventsByYear: Record<string, number> = {};
+
+    finishedEvents.forEach(e => {
+      const d = new Date(e.date);
+      const monthKey = `${d.getFullYear()}-${d.getMonth()}`;
+      const yearKey = `${d.getFullYear()}`;
+
+      eventsByMonth[monthKey] = (eventsByMonth[monthKey] || 0) + 1;
+      eventsByYear[yearKey] = (eventsByYear[yearKey] || 0) + 1;
+    });
+
+    const maxMonth = Math.max(0, ...Object.values(eventsByMonth));
+    const maxYear = Math.max(0, ...Object.values(eventsByYear));
+
+    if (maxMonth >= 3) unlock('complete_3_games_month');
+    if (maxMonth >= 10) unlock('complete_10_games_month');
+    if (maxMonth >= 30) unlock('complete_30_games_month');
+
+    if (maxYear >= 10) unlock('complete_10_games_year');
+    if (maxYear >= 25) unlock('complete_25_games_year');
+    if (maxYear >= 50) unlock('complete_50_games_year');
+
+    if (hasChanges) {
+      setAchievements(newAchievements);
+    }
   };
 
   useEffect(() => {
-     const newAchievements = [...achievements];
-     const idx = newAchievements.findIndex(a => a.id === 'first_access');
-     if (idx !== -1 && !newAchievements[idx].unlocked) {
-         newAchievements[idx].unlocked = true;
-         newAchievements[idx].unlockedDate = new Date().toISOString();
-         setAchievements(newAchievements);
-         toast({
-            title: "Bem-vindo à GameLine",
-            description: "Acessou a GameLine pela primeira vez.",
-            variant: "achievement"
-         });
-     }
+    const newAchievements = [...achievements];
+    const idx = newAchievements.findIndex(a => a.id === 'first_access');
+    if (idx !== -1 && !newAchievements[idx].unlocked) {
+      newAchievements[idx].unlocked = true;
+      newAchievements[idx].unlockedDate = new Date().toISOString();
+      setAchievements(newAchievements);
+      toast({
+        title: "Bem-vindo à GameLine",
+        description: "Acessou a GameLine pela primeira vez.",
+        variant: "achievement"
+      });
+    }
   }, []);
 
   useEffect(() => {
-      checkAchievements();
-  }, [games.length, events.length]); 
+    checkAchievements();
+  }, [games.length, events.length]);
 
   return (
     <GameContext.Provider value={{ games, events, achievements, userProfile, settings, addGame, addEvent, updateUserProfile, updateSettings, exportData, resetData }}>

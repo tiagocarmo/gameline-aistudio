@@ -12,11 +12,11 @@ interface EmptyStateProps {
   className?: string;
 }
 
-const EmptyState: React.FC<EmptyStateProps> = ({ 
-  icon: Icon, 
-  title, 
-  description, 
-  actionLabel, 
+const EmptyState: React.FC<EmptyStateProps> = ({
+  icon: Icon,
+  title,
+  description,
+  actionLabel,
   onAction,
   className = ''
 }) => {
@@ -27,7 +27,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
       </div>
       <Heading level={2} className="text-slate-300 mb-2 !text-xl">{title}</Heading>
       <Text variant="muted" className="max-w-md mx-auto mb-6">{description}</Text>
-      
+
       {actionLabel && onAction && (
         <Button variant="secondary" onClick={onAction}>
           {actionLabel}

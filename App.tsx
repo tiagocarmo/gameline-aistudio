@@ -1,6 +1,11 @@
-
 import React, { useEffect, useState } from 'react';
-import { HashRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import {
+  HashRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+  useNavigate
+} from 'react-router-dom';
 import Timeline from './components/Timeline';
 import SideDrawer from './components/FloatingMenu';
 import Stats from './components/Stats';
@@ -33,17 +38,17 @@ const ScrollToTop = () => {
 }
 
 const RouteGuard: React.FC = () => {
-    const { userProfile } = useGames();
-    const navigate = useNavigate();
-    const location = useLocation();
+  const { userProfile } = useGames();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    useEffect(() => {
-        if (!userProfile.name && location.pathname !== '/settings') {
-            navigate('/settings', { replace: true });
-        }
-    }, [userProfile, location, navigate]);
+  useEffect(() => {
+    if (!userProfile.name && location.pathname !== '/settings') {
+      navigate('/settings', { replace: true });
+    }
+  }, [userProfile, location, navigate]);
 
-    return null;
+  return null;
 };
 
 const AppContent = () => {
@@ -53,8 +58,8 @@ const AppContent = () => {
     <div className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground dark overflow-x-hidden">
       {/* Decorative background blobs */}
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-secondary/10 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-secondary/10 rounded-full blur-3xl animate-pulse-slow"></div>
       </div>
 
       <Header onMenuToggle={() => setIsMenuOpen(true)} />

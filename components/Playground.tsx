@@ -1,24 +1,33 @@
-
 import React, { useState } from 'react';
-import { 
-  Play, Plus, Save, Trash2, Search, Bell, Check, 
-  ChevronRight, Gamepad2, Trophy, Star, Lock, LayoutTemplate 
+import {
+  Plus,
+  Save,
+  Search,
+  Bell,
+  Check,
+  Gamepad2,
+  Trophy,
+  LayoutTemplate
 } from 'lucide-react';
 
 // Atoms
 import Button from './atoms/Button';
 import Badge from './atoms/Badge';
-import Card from './atoms/Card';
 import Input from './atoms/Input';
 import Label from './atoms/Label';
 import Textarea from './atoms/TextArea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './atoms/Select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from './atoms/Select';
 import { Heading, Text } from './atoms/Typography';
 
 // Molecules
 import EmptyState from './molecules/EmptyState';
 import KpiCard from './molecules/KpiCard';
-import MetricCard from './molecules/MetricCard';
 import PlatformBadge from './molecules/PlatformBadge';
 import SearchInput from './molecules/SearchInput';
 
@@ -30,7 +39,12 @@ import AchievementCard from './organisms/AchievementCard';
 import { useToast } from '../hooks/use-toast';
 
 // Types & Mock Data
-import { Game, GameStatus, GamePerception, Achievement, NotificationToast } from '../types';
+import {
+  Game,
+  GameStatus,
+  GamePerception,
+  Achievement
+} from '../types';
 
 // --- Helper Components for Documentation ---
 
@@ -48,23 +62,23 @@ const DocSection: React.FC<{ title: string; children: React.ReactNode }> = ({ ti
   </section>
 );
 
-const ComponentDoc: React.FC<{ 
-  name: string; 
-  description: string; 
-  usage: string; 
-  children: React.ReactNode 
+const ComponentDoc: React.FC<{
+  name: string;
+  description: string;
+  usage: string;
+  children: React.ReactNode
 }> = ({ name, description, usage, children }) => (
   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
     <div className="lg:col-span-4 space-y-4">
       <h3 className="text-2xl font-bold text-white">{name}</h3>
       <p className="text-slate-400 leading-relaxed">{description}</p>
-      
+
       <div className="bg-slate-900 rounded-lg p-4 border border-slate-800 font-mono text-xs text-slate-500 overflow-x-auto">
         <div className="uppercase text-[10px] font-bold text-slate-600 mb-2">Onde usar:</div>
         {usage}
       </div>
     </div>
-    
+
     <div className="lg:col-span-8 bg-slate-800/50 border border-slate-700/50 rounded-2xl p-8 backdrop-blur-sm">
       <div className="w-full flex flex-wrap gap-6 items-center justify-center">
         {children}
@@ -128,11 +142,11 @@ const Playground: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-6 pb-32 pt-10 animate-fade-in">
-      
+
       {/* Header */}
       <div className="mb-16 text-center max-w-2xl mx-auto">
         <div className="inline-flex items-center justify-center p-3 bg-slate-800 rounded-2xl mb-6 shadow-xl border border-slate-700">
-           <LayoutTemplate size={32} className="text-indigo-400" />
+          <LayoutTemplate size={32} className="text-indigo-400" />
         </div>
         <Heading className="mb-4">GameLine Design System</Heading>
         <Text variant="muted" className="text-lg">
@@ -142,10 +156,10 @@ const Playground: React.FC = () => {
 
       {/* --- ATOMS --- */}
       <DocSection title="Átomos">
-        
-        <ComponentDoc 
-          name="Typography" 
-          description="Sistema tipográfico baseado na família Inter. Define hierarquia visual clara." 
+
+        <ComponentDoc
+          name="Typography"
+          description="Sistema tipográfico baseado na família Inter. Define hierarquia visual clara."
           usage="Heading para títulos de página e seções. Text para parágrafos, legendas e metadados."
         >
           <div className="flex flex-col gap-4 items-start w-full">
@@ -158,100 +172,100 @@ const Playground: React.FC = () => {
           </div>
         </ComponentDoc>
 
-        <ComponentDoc 
-          name="Button" 
-          description="Componente de interação principal. Suporta variantes de estilo, ícones e estados de largura total." 
+        <ComponentDoc
+          name="Button"
+          description="Componente de interação principal. Suporta variantes de estilo, ícones e estados de largura total."
           usage="Ações primárias (Salvar), secundárias (Navegar), perigosas (Excluir) e botões apenas de ícone."
         >
           <div className="flex flex-col gap-4">
-             <div className="flex flex-wrap gap-4 items-center justify-center">
-                <Button variant="primary">Primary</Button>
-                <Button variant="secondary">Secondary</Button>
-                <Button variant="ghost">Ghost</Button>
-                <Button variant="danger">Danger</Button>
-             </div>
-             <div className="flex flex-wrap gap-4 items-center justify-center">
-                <Button variant="primary" icon={Plus}>With Icon</Button>
-                <Button variant="secondary" icon={Save}>Save</Button>
-                <Button variant="icon" icon={Bell} title="Notification" />
-             </div>
-             <div className="w-full">
-                <Button fullWidth variant="primary">Full Width Button</Button>
-             </div>
-             {/* Primary Action Button Example */}
-             <div className="w-full mt-4 p-4 border border-slate-700/50 rounded-xl bg-slate-900/50">
-                <Text variant="small" className="mb-4 text-slate-500 uppercase font-bold text-center">Botão de Ação Principal (Formulários)</Text>
-                <div className="flex justify-center">
-                    <Button 
-                        variant="primary" 
-                        icon={Check}
-                        className="w-full md:w-[340px] h-auto py-6 text-lg font-bold shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
-                    >
-                        Confirmar Ação
-                    </Button>
-                </div>
-             </div>
+            <div className="flex flex-wrap gap-4 items-center justify-center">
+              <Button variant="primary">Primary</Button>
+              <Button variant="secondary">Secondary</Button>
+              <Button variant="ghost">Ghost</Button>
+              <Button variant="danger">Danger</Button>
+            </div>
+            <div className="flex flex-wrap gap-4 items-center justify-center">
+              <Button variant="primary" icon={Plus}>With Icon</Button>
+              <Button variant="secondary" icon={Save}>Save</Button>
+              <Button variant="icon" icon={Bell} title="Notification" />
+            </div>
+            <div className="w-full">
+              <Button fullWidth variant="primary">Full Width Button</Button>
+            </div>
+            {/* Primary Action Button Example */}
+            <div className="w-full mt-4 p-4 border border-slate-700/50 rounded-xl bg-slate-900/50">
+              <Text variant="small" className="mb-4 text-slate-500 uppercase font-bold text-center">Botão de Ação Principal (Formulários)</Text>
+              <div className="flex justify-center">
+                <Button
+                  variant="primary"
+                  icon={Check}
+                  className="w-full md:w-[340px] h-auto py-6 text-lg font-bold shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  Confirmar Ação
+                </Button>
+              </div>
+            </div>
           </div>
         </ComponentDoc>
 
-        <ComponentDoc 
-          name="Badge" 
-          description="Pequenos rótulos para metadados, categorias e status." 
+        <ComponentDoc
+          name="Badge"
+          description="Pequenos rótulos para metadados, categorias e status."
           usage="Cards de jogos (Plataforma), Status de conclusão, Tabelas."
         >
-           <Badge>Default</Badge>
-           <Badge color="bg-indigo-500 text-white">Indigo</Badge>
-           <Badge color="bg-emerald-500/10 text-emerald-500">Emerald Tint</Badge>
-           <Badge color="bg-red-500 text-white" size="sm">Small Red</Badge>
-           <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">Gradient</Badge>
+          <Badge>Default</Badge>
+          <Badge color="bg-indigo-500 text-white">Indigo</Badge>
+          <Badge color="bg-emerald-500/10 text-emerald-500">Emerald Tint</Badge>
+          <Badge color="bg-red-500 text-white" size="sm">Small Red</Badge>
+          <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">Gradient</Badge>
         </ComponentDoc>
 
-        <ComponentDoc 
-          name="Inputs" 
-          description="Campos de formulário estilizados para entrada de dados." 
+        <ComponentDoc
+          name="Inputs"
+          description="Campos de formulário estilizados para entrada de dados."
           usage="Formulários de cadastro de jogos, configurações, filtros."
         >
-           <div className="w-full max-w-md space-y-4">
-              <div>
-                 <Label>Default Input</Label>
-                 <Input placeholder="Digite algo..." />
-              </div>
-              <div>
-                 <Label required>Required Input with Error</Label>
-                 <Input placeholder="Campo obrigatório" error />
-              </div>
-              <div>
-                 <Label>Select Input</Label>
-                 <Select>
-                    <SelectTrigger>
-                        <SelectValue placeholder="Select Option" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="opt1">Option 1</SelectItem>
-                        <SelectItem value="opt2">Option 2</SelectItem>
-                    </SelectContent>
-                 </Select>
-              </div>
-              <div>
-                 <Label>Text Area</Label>
-                 <Textarea placeholder="Digite uma descrição longa..." />
-              </div>
-           </div>
+          <div className="w-full max-w-md space-y-4">
+            <div>
+              <Label>Default Input</Label>
+              <Input placeholder="Digite algo..." />
+            </div>
+            <div>
+              <Label required>Required Input with Error</Label>
+              <Input placeholder="Campo obrigatório" error />
+            </div>
+            <div>
+              <Label>Select Input</Label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select Option" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="opt1">Option 1</SelectItem>
+                  <SelectItem value="opt2">Option 2</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label>Text Area</Label>
+              <Textarea placeholder="Digite uma descrição longa..." />
+            </div>
+          </div>
         </ComponentDoc>
 
-         <ComponentDoc 
-          name="Toast" 
-          description="Notificação temporária flutuante para feedback do sistema." 
+        <ComponentDoc
+          name="Toast"
+          description="Notificação temporária flutuante para feedback do sistema."
           usage="Ao desbloquear uma conquista ou concluir uma ação com sucesso."
         >
-           <div className="flex flex-col items-center gap-4 w-full">
-              <Button onClick={() => toast({ title: "Demo Toast", description: "Este é um exemplo de notificação." })}>
-                 Disparar Toast Info
-              </Button>
-              <Button variant="secondary" onClick={() => toast({ title: "Conquista Desbloqueada!", description: "Você clicou no botão.", variant: "achievement" })}>
-                 Disparar Toast Conquista
-              </Button>
-           </div>
+          <div className="flex flex-col items-center gap-4 w-full">
+            <Button onClick={() => toast({ title: "Demo Toast", description: "Este é um exemplo de notificação." })}>
+              Disparar Toast Info
+            </Button>
+            <Button variant="secondary" onClick={() => toast({ title: "Conquista Desbloqueada!", description: "Você clicou no botão.", variant: "achievement" })}>
+              Disparar Toast Conquista
+            </Button>
+          </div>
         </ComponentDoc>
 
       </DocSection>
@@ -259,58 +273,58 @@ const Playground: React.FC = () => {
 
       {/* --- MOLECULES --- */}
       <DocSection title="Moléculas">
-         
-         <ComponentDoc 
-          name="KPI Card" 
-          description="Cartão de indicador chave de desempenho. Exibe um número grande com ícone e rótulo." 
+
+        <ComponentDoc
+          name="KPI Card"
+          description="Cartão de indicador chave de desempenho. Exibe um número grande com ícone e rótulo."
           usage="Dashboard, Página de Relatórios."
         >
-           <div className="grid grid-cols-2 gap-4 w-full max-w-lg">
-              <KpiCard label="Jogos" value={125} icon={Gamepad2} color="text-indigo-400" />
-              <KpiCard label="Platinas" value={12} icon={Trophy} color="text-yellow-400" subLabel="100%" />
-           </div>
+          <div className="grid grid-cols-2 gap-4 w-full max-w-lg">
+            <KpiCard label="Jogos" value={125} icon={Gamepad2} color="text-indigo-400" />
+            <KpiCard label="Platinas" value={12} icon={Trophy} color="text-yellow-400" subLabel="100%" />
+          </div>
         </ComponentDoc>
 
-        <ComponentDoc 
-          name="Empty State" 
-          description="Componente visual para quando não há dados a serem exibidos." 
+        <ComponentDoc
+          name="Empty State"
+          description="Componente visual para quando não há dados a serem exibidos."
           usage="Listas vazias, resultados de busca sem retorno, estados iniciais."
         >
-           <EmptyState 
-              icon={Search} 
-              title="Nada encontrado" 
-              description="Tente ajustar os filtros ou buscar por outro termo."
-              actionLabel="Limpar Filtros"
-              onAction={() => {}}
-              className="w-full max-w-md"
-           />
+          <EmptyState
+            icon={Search}
+            title="Nada encontrado"
+            description="Tente ajustar os filtros ou buscar por outro termo."
+            actionLabel="Limpar Filtros"
+            onAction={() => { }}
+            className="w-full max-w-md"
+          />
         </ComponentDoc>
 
-        <ComponentDoc 
-          name="Search Input" 
-          description="Campo de entrada especializado para busca com ícone integrado." 
+        <ComponentDoc
+          name="Search Input"
+          description="Campo de entrada especializado para busca com ícone integrado."
           usage="Header da Biblioteca, Modal de adicionar jogo."
         >
-           <div className="w-full max-w-md">
-              <SearchInput 
-                value={searchValue} 
-                onChange={setSearchValue}
-                placeholder="Buscar jogos, séries ou plataformas..." 
-              />
-           </div>
+          <div className="w-full max-w-md">
+            <SearchInput
+              value={searchValue}
+              onChange={setSearchValue}
+              placeholder="Buscar jogos, séries ou plataformas..."
+            />
+          </div>
         </ComponentDoc>
 
-         <ComponentDoc 
-          name="Platform Badge" 
-          description="Variação específica do Badge para exibir plataformas de jogos." 
+        <ComponentDoc
+          name="Platform Badge"
+          description="Variação específica do Badge para exibir plataformas de jogos."
           usage="Cards de jogos, Listas de detalhes."
         >
-           <div className="flex gap-2">
-              <PlatformBadge platformId="ps5" />
-              <PlatformBadge platformId="switch" />
-              <PlatformBadge platformId="pc" />
-              <PlatformBadge platformId="gba" />
-           </div>
+          <div className="flex gap-2">
+            <PlatformBadge platformId="ps5" />
+            <PlatformBadge platformId="switch" />
+            <PlatformBadge platformId="pc" />
+            <PlatformBadge platformId="gba" />
+          </div>
         </ComponentDoc>
 
       </DocSection>
@@ -319,29 +333,29 @@ const Playground: React.FC = () => {
       {/* --- ORGANISMS --- */}
       <DocSection title="Organismos">
 
-        <ComponentDoc 
-          name="Game Card" 
-          description="O cartão principal da biblioteca. Exibe capa (com efeito hover), título, status e plataformas." 
+        <ComponentDoc
+          name="Game Card"
+          description="O cartão principal da biblioteca. Exibe capa (com efeito hover), título, status e plataformas."
           usage="Grid da Biblioteca, Resultados de busca."
         >
-           <div className="w-48 h-80">
-              <GameCard game={MOCK_GAME} />
-           </div>
-           <div className="w-48 h-80">
-              <GameCard game={{...MOCK_GAME, id: 'mock-2', status: GameStatus.Playing, completionType: 'Normal', title: 'Hollow Knight: Silksong (Hypothetical)'}} />
-           </div>
+          <div className="w-48 h-80">
+            <GameCard game={MOCK_GAME} />
+          </div>
+          <div className="w-48 h-80">
+            <GameCard game={{ ...MOCK_GAME, id: 'mock-2', status: GameStatus.Playing, completionType: 'Normal', title: 'Hollow Knight: Silksong (Hypothetical)' }} />
+          </div>
         </ComponentDoc>
 
-        <ComponentDoc 
-          name="Achievement Card" 
-          description="Card complexo que exibe o estado de uma conquista: bloqueada, desbloqueada (com data) ou secreta." 
+        <ComponentDoc
+          name="Achievement Card"
+          description="Card complexo que exibe o estado de uma conquista: bloqueada, desbloqueada (com data) ou secreta."
           usage="Página de Conquistas, Feed de atividades."
         >
-           <div className="flex flex-col gap-4 w-full max-w-lg">
-              <AchievementCard achievement={MOCK_ACHIEVEMENT_UNLOCKED} />
-              <AchievementCard achievement={MOCK_ACHIEVEMENT_LOCKED} />
-              <AchievementCard achievement={MOCK_ACHIEVEMENT_SECRET} />
-           </div>
+          <div className="flex flex-col gap-4 w-full max-w-lg">
+            <AchievementCard achievement={MOCK_ACHIEVEMENT_UNLOCKED} />
+            <AchievementCard achievement={MOCK_ACHIEVEMENT_LOCKED} />
+            <AchievementCard achievement={MOCK_ACHIEVEMENT_SECRET} />
+          </div>
         </ComponentDoc>
 
       </DocSection>

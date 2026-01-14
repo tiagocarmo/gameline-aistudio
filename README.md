@@ -1,4 +1,3 @@
-
 # GameLine
 
 **Sua timeline de jogos pessoal.**

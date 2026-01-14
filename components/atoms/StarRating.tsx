@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Star } from 'lucide-react';
 import { cn } from '../../lib/utils';
@@ -11,12 +10,12 @@ interface StarRatingProps {
   readOnly?: boolean;
 }
 
-const StarRating: React.FC<StarRatingProps> = ({ 
-  value, 
-  onChange, 
-  size = 24, 
+const StarRating: React.FC<StarRatingProps> = ({
+  value,
+  onChange,
+  size = 24,
   className,
-  readOnly = false 
+  readOnly = false
 }) => {
   const [hoverValue, setHoverValue] = useState<number | null>(null);
 
@@ -42,8 +41,8 @@ const StarRating: React.FC<StarRatingProps> = ({
             size={size}
             className={cn(
               "transition-colors",
-              star <= displayValue 
-                ? "fill-indigo-500 text-indigo-500 drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]" 
+              star <= displayValue
+                ? "fill-indigo-500 text-indigo-500 drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]"
                 : "text-slate-700 fill-transparent"
             )}
             strokeWidth={star <= displayValue ? 1.5 : 1}

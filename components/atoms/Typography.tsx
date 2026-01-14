@@ -44,7 +44,7 @@ export const Typography = ({
   children,
   ...props
 }: TypographyProps) => {
-  const Component = as || 
+  const Component = as ||
     (variant?.startsWith('h') ? (variant as any) : 'p');
 
   return (
@@ -56,18 +56,18 @@ export const Typography = ({
 
 // --- Backward Compatibility Adapters ---
 
-export const Heading: React.FC<{ children: React.ReactNode; className?: string; level?: 1 | 2 | 3 }> = ({ 
-  children, 
+export const Heading: React.FC<{ children: React.ReactNode; className?: string; level?: 1 | 2 | 3 }> = ({
+  children,
   className = '',
-  level = 1 
+  level = 1
 }) => {
   const variantMap = { 1: 'h1', 2: 'h2', 3: 'h3' } as const;
   const variant = variantMap[level] || 'h1';
-  
+
   return (
-    <Typography 
-      as={`h${level}` as any} 
-      variant={variant} 
+    <Typography
+      as={`h${level}` as any}
+      variant={variant}
       gradient={level === 1}
       className={className}
     >
@@ -76,8 +76,8 @@ export const Heading: React.FC<{ children: React.ReactNode; className?: string; 
   );
 };
 
-export const Text: React.FC<{ children: React.ReactNode; className?: string; variant?: 'body' | 'muted' | 'small' }> = ({ 
-  children, 
+export const Text: React.FC<{ children: React.ReactNode; className?: string; variant?: 'body' | 'muted' | 'small' }> = ({
+  children,
   className = '',
   variant = 'body'
 }) => {
@@ -91,8 +91,8 @@ export const Text: React.FC<{ children: React.ReactNode; className?: string; var
   }
 
   return (
-    <Typography 
-      variant={typoVariant} 
+    <Typography
+      variant={typoVariant}
       className={cn(extraClasses, className)}
     >
       {children}

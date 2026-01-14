@@ -1,210 +1,222 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR" class="dark" style="overflow-x: hidden;">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>GameLine</title>
 
-    <!-- Fonts: Inter & Space Grotesk -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>GameLine</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          container: {
-            center: true,
-            padding: "2rem",
-            screens: {
-              "2xl": "1400px",
+  <!-- Fonts: Inter & Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        container: {
+          center: true,
+          padding: "2rem",
+          screens: {
+            "2xl": "1400px",
+          },
+        },
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Space Grotesk', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            border: "hsl(var(--border))",
+            input: "hsl(var(--input))",
+            ring: "hsl(var(--ring))",
+            background: "hsl(var(--background))",
+            foreground: "hsl(var(--foreground))",
+            primary: {
+              DEFAULT: "hsl(var(--primary))",
+              foreground: "hsl(var(--primary-foreground))",
+            },
+            secondary: {
+              DEFAULT: "hsl(var(--secondary))",
+              foreground: "hsl(var(--secondary-foreground))",
+            },
+            destructive: {
+              DEFAULT: "hsl(var(--destructive))",
+              foreground: "hsl(var(--destructive-foreground))",
+            },
+            muted: {
+              DEFAULT: "hsl(var(--muted))",
+              foreground: "hsl(var(--muted-foreground))",
+            },
+            accent: {
+              DEFAULT: "hsl(var(--accent))",
+              foreground: "hsl(var(--accent-foreground))",
+            },
+            popover: {
+              DEFAULT: "hsl(var(--popover))",
+              foreground: "hsl(var(--popover-foreground))",
+            },
+            card: {
+              DEFAULT: "hsl(var(--card))",
+              foreground: "hsl(var(--card-foreground))",
+            },
+            // GameLine Custom Colors mapped to CSS vars
+            gameline: {
+              blue: "hsl(var(--gameline-blue))",
+              "blue-dark": "hsl(var(--gameline-blue-dark))",
+              purple: "hsl(var(--gameline-purple))",
+              "purple-dark": "hsl(var(--gameline-purple-dark))",
             },
           },
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'system-ui', 'sans-serif'],
-              display: ['Space Grotesk', 'system-ui', 'sans-serif'],
+          borderRadius: {
+            lg: "var(--radius)",
+            md: "calc(var(--radius) - 2px)",
+            sm: "calc(var(--radius) - 4px)",
+          },
+          keyframes: {
+            "accordion-down": {
+              from: { height: "0" },
+              to: { height: "var(--radix-accordion-content-height)" },
             },
-            colors: {
-              border: "hsl(var(--border))",
-              input: "hsl(var(--input))",
-              ring: "hsl(var(--ring))",
-              background: "hsl(var(--background))",
-              foreground: "hsl(var(--foreground))",
-              primary: {
-                DEFAULT: "hsl(var(--primary))",
-                foreground: "hsl(var(--primary-foreground))",
-              },
-              secondary: {
-                DEFAULT: "hsl(var(--secondary))",
-                foreground: "hsl(var(--secondary-foreground))",
-              },
-              destructive: {
-                DEFAULT: "hsl(var(--destructive))",
-                foreground: "hsl(var(--destructive-foreground))",
-              },
-              muted: {
-                DEFAULT: "hsl(var(--muted))",
-                foreground: "hsl(var(--muted-foreground))",
-              },
-              accent: {
-                DEFAULT: "hsl(var(--accent))",
-                foreground: "hsl(var(--accent-foreground))",
-              },
-              popover: {
-                DEFAULT: "hsl(var(--popover))",
-                foreground: "hsl(var(--popover-foreground))",
-              },
-              card: {
-                DEFAULT: "hsl(var(--card))",
-                foreground: "hsl(var(--card-foreground))",
-              },
-              // GameLine Custom Colors mapped to CSS vars
-              gameline: {
-                blue: "hsl(var(--gameline-blue))",
-                "blue-dark": "hsl(var(--gameline-blue-dark))",
-                purple: "hsl(var(--gameline-purple))",
-                "purple-dark": "hsl(var(--gameline-purple-dark))",
-              },
+            "accordion-up": {
+              from: { height: "var(--radix-accordion-content-height)" },
+              to: { height: "0" },
             },
-            borderRadius: {
-              lg: "var(--radius)",
-              md: "calc(var(--radius) - 2px)",
-              sm: "calc(var(--radius) - 4px)",
+            "float": {
+              "0%, 100%": { transform: "translateY(0px)" },
+              "50%": { transform: "translateY(-10px)" },
             },
-            keyframes: {
-              "accordion-down": {
-                from: { height: "0" },
-                to: { height: "var(--radix-accordion-content-height)" },
-              },
-              "accordion-up": {
-                from: { height: "var(--radix-accordion-content-height)" },
-                to: { height: "0" },
-              },
-              "float": {
-                "0%, 100%": { transform: "translateY(0px)" },
-                "50%": { transform: "translateY(-10px)" },
-              },
-              "pulse-slow": {
-                "0%, 100%": { opacity: "1" },
-                "50%": { opacity: "0.7" },
-              },
-              "fade-in": {
-                from: { opacity: "0" },
-                to: { opacity: "1" },
-              },
-              "slide-up": {
-                from: { opacity: "0", transform: "translateY(20px)" },
-                to: { opacity: "1", transform: "translateY(0)" },
-              },
+            "pulse-slow": {
+              "0%, 100%": { opacity: "1" },
+              "50%": { opacity: "0.7" },
             },
-            animation: {
-              "accordion-down": "accordion-down 0.2s ease-out",
-              "accordion-up": "accordion-up 0.2s ease-out",
-              "float": "float 6s ease-in-out infinite",
-              "pulse-slow": "pulse-slow 4s ease-in-out infinite",
-              "fade-in": "fade-in 0.6s ease-out forwards",
-              "slide-up": "slide-up 0.6s ease-out forwards",
+            "fade-in": {
+              from: { opacity: "0" },
+              to: { opacity: "1" },
             },
-          }
+            "slide-up": {
+              from: { opacity: "0", transform: "translateY(20px)" },
+              to: { opacity: "1", transform: "translateY(0)" },
+            },
+          },
+          animation: {
+            "accordion-down": "accordion-down 0.2s ease-out",
+            "accordion-up": "accordion-up 0.2s ease-out",
+            "float": "float 6s ease-in-out infinite",
+            "pulse-slow": "pulse-slow 4s ease-in-out infinite",
+            "fade-in": "fade-in 0.6s ease-out forwards",
+            "slide-up": "slide-up 0.6s ease-out forwards",
+          },
         }
       }
-    </script>
-    <style>
-      @layer base {
-        :root {
-          --background: 0 0% 98%;
-          --foreground: 230 25% 10%;
-          --card: 0 0% 100%;
-          --card-foreground: 230 25% 10%;
-          --popover: 0 0% 100%;
-          --popover-foreground: 230 25% 10%;
-          --primary: 217 91% 60%;
-          --primary-foreground: 0 0% 100%;
-          --secondary: 263 70% 58%;
-          --secondary-foreground: 0 0% 100%;
-          --muted: 220 15% 95%;
-          --muted-foreground: 220 10% 50%;
-          --accent: 263 70% 58%;
-          --accent-foreground: 0 0% 100%;
-          --destructive: 0 84% 60%;
-          --destructive-foreground: 0 0% 100%;
-          --border: 220 15% 90%;
-          --input: 220 15% 90%;
-          --ring: 217 91% 60%;
-          --radius: 0.75rem;
-          --gameline-blue: 217 91% 60%;
-          --gameline-blue-dark: 221 83% 53%;
-          --gameline-purple: 263 70% 58%;
-          --gameline-purple-dark: 271 81% 56%;
-        }
-
-        .dark {
-          --background: 230 25% 8%;
-          --foreground: 220 20% 95%;
-          --card: 230 25% 11%;
-          --card-foreground: 220 20% 95%;
-          --popover: 230 25% 11%;
-          --popover-foreground: 220 20% 95%;
-          --primary: 217 91% 60%;
-          --primary-foreground: 0 0% 100%;
-          --secondary: 263 70% 58%;
-          --secondary-foreground: 0 0% 100%;
-          --muted: 230 20% 15%;
-          --muted-foreground: 220 15% 60%;
-          --accent: 230 20% 15%;
-          --accent-foreground: 0 0% 100%;
-          --destructive: 0 72% 50%;
-          --destructive-foreground: 0 0% 100%;
-          --border: 230 20% 18%;
-          --input: 230 20% 18%;
-          --ring: 217 91% 60%;
-        }
+    }
+  </script>
+  <style>
+    @layer base {
+      :root {
+        --background: 0 0% 98%;
+        --foreground: 230 25% 10%;
+        --card: 0 0% 100%;
+        --card-foreground: 230 25% 10%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 230 25% 10%;
+        --primary: 217 91% 60%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 263 70% 58%;
+        --secondary-foreground: 0 0% 100%;
+        --muted: 220 15% 95%;
+        --muted-foreground: 220 10% 50%;
+        --accent: 263 70% 58%;
+        --accent-foreground: 0 0% 100%;
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 220 15% 90%;
+        --input: 220 15% 90%;
+        --ring: 217 91% 60%;
+        --radius: 0.75rem;
+        --gameline-blue: 217 91% 60%;
+        --gameline-blue-dark: 221 83% 53%;
+        --gameline-purple: 263 70% 58%;
+        --gameline-purple-dark: 271 81% 56%;
       }
 
-      html, body {
-        overflow-x: hidden;
-        position: relative;
-        width: 100%;
-        height: 100%;
+      .dark {
+        --background: 230 25% 8%;
+        --foreground: 220 20% 95%;
+        --card: 230 25% 11%;
+        --card-foreground: 220 20% 95%;
+        --popover: 230 25% 11%;
+        --popover-foreground: 220 20% 95%;
+        --primary: 217 91% 60%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 263 70% 58%;
+        --secondary-foreground: 0 0% 100%;
+        --muted: 230 20% 15%;
+        --muted-foreground: 220 15% 60%;
+        --accent: 230 20% 15%;
+        --accent-foreground: 0 0% 100%;
+        --destructive: 0 72% 50%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 230 20% 18%;
+        --input: 230 20% 18%;
+        --ring: 217 91% 60%;
       }
+    }
 
-      body {
-        font-family: 'Inter', sans-serif;
-        background-color: hsl(var(--background));
-        color: hsl(var(--foreground));
-        -webkit-text-size-adjust: 100%; /* Prevent font scaling on orientation change */
-      }
+    html,
+    body {
+      overflow-x: hidden;
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
 
-      /* CRITICAL: Force 16px font size on mobile for all inputs to prevent iOS auto-zoom */
-      @media screen and (max-width: 800px) {
-        input, select, textarea {
-          font-size: 16px !important;
-        }
-      }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: hsl(var(--background));
+      color: hsl(var(--foreground));
+      -webkit-text-size-adjust: 100%;
+      /* Prevent font scaling on orientation change */
+    }
 
-      /* Custom Scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
+    /* CRITICAL: Force 16px font size on mobile for all inputs to prevent iOS auto-zoom */
+    @media screen and (max-width: 800px) {
+
+      input,
+      select,
+      textarea {
+        font-size: 16px !important;
       }
-      ::-webkit-scrollbar-track {
-        background: hsl(var(--muted));
-      }
-      ::-webkit-scrollbar-thumb {
-        background: hsl(var(--muted-foreground) / 0.5);
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: hsl(var(--muted-foreground));
-      }
-    </style>
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: hsl(var(--muted));
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: hsl(var(--muted-foreground) / 0.5);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: hsl(var(--muted-foreground));
+    }
+  </style>
   <script type="module" src="/index.tsx"></script>
   <!-- For Vite production build the entry is injected; keep explicit fallback for dev server -->
 </head>
-  <body>
-    <div id="root"></div>
-  </body>
+
+<body>
+  <div id="root"></div>
+</body>
+
 </html>
