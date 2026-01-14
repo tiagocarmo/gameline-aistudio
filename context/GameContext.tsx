@@ -92,17 +92,18 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const saved = localStorage.getItem('gl_events');
       const raw: TimelineEvent[] = saved ? JSON.parse(saved) : TIMELINE_EVENTS;
 
-      // Normalize date-only strings (YYYY-MM-DD) to full ISO datetimes at UTC midnight
+      // Normalize date-only strings (YYYY-MM-DD) to full ISO datetimes at local midnight
       return raw.map(ev => {
         if (/^\d{4}-\d{2}-\d{2}$/.test(ev.date)) {
-          return { ...ev, date: new Date(`${ev.date}T00:00:00Z`).toISOString() };
+          // Create a Date at local midnight for that date, then store its ISO string.
+          return { ...ev, date: new Date(`${ev.date}T00:00:00`).toISOString() };
         }
         return ev;
       });
     } catch {
       return TIMELINE_EVENTS.map(ev => {
         if (/^\d{4}-\d{2}-\d{2}$/.test(ev.date)) {
-          return { ...ev, date: new Date(`${ev.date}T00:00:00Z`).toISOString() };
+          return { ...ev, date: new Date(`${ev.date}T00:00:00`).toISOString() };
         }
         return ev;
       });
